@@ -5,7 +5,7 @@ export type Popup = {
   image: string;
   categories: string[];
   isHot: boolean;
-  orderType: "First come first serve" | "Take away";
+  orderType: "First come first serve" | "Preorder";
 };
 
 export type Event = {
