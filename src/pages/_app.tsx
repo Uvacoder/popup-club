@@ -1,4 +1,3 @@
-// src/pages/_app.tsx
 import { withTRPC } from "@trpc/next";
 import type { AppRouter } from "../server/router";
 import type { AppType } from "next/dist/shared/lib/utils";
@@ -12,9 +11,7 @@ const MyApp: AppType = ({
 }) => {
   return (
     <SessionProvider session={session}>
-      <div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8'>
-        <Component {...pageProps} />
-      </div>
+      <Component {...pageProps} />
     </SessionProvider>
   );
 };

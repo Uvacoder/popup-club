@@ -62,3 +62,7 @@ model VerificationToken {
 
     @@unique([identifier, token])
 }
+
+model Popup {
+    id String @id @default(cuid())
+}

@@ -1,19 +1,3 @@
-/*
-  This example requires Tailwind CSS v2.0+ 
-  
-  This example requires some changes to your config:
-  
-  ```
-  // tailwind.config.js
-  module.exports = {
-    // ...
-    plugins: [
-      // ...
-      require('@tailwindcss/forms'),
-    ],
-  }
-  ```
-*/
 import { Fragment } from "react";
 import { Disclosure, Menu, Transition } from "@headlessui/react";
 import { SearchIcon } from "@heroicons/react/solid";
@@ -21,7 +5,7 @@ import { BellIcon, MenuIcon, XIcon } from "@heroicons/react/outline";
 
 const user = {
   name: "Tom Cook",
-  email: "tom@example.com",
+  email: "Easy Luck Coffee",
   imageUrl:
     "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
 };
@@ -32,7 +16,7 @@ const navigation = [
   { name: "Calendar", href: "#", current: false },
 ];
 const userNavigation = [
-  { name: "Your Profile", href: "#" },
+  { name: "Vendor Profile", href: "#" },
   { name: "Settings", href: "#" },
   { name: "Sign out", href: "#" },
 ];
@@ -41,7 +25,7 @@ function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(" ");
 }
 
-export default function Example() {
+export default function Nav() {
   return (
     <Disclosure as='header' className='bg-gray-800'>
       {({ open }) => (
@@ -103,7 +87,7 @@ export default function Example() {
                 <Menu as='div' className='flex-shrink-0 relative ml-4'>
                   <div>
                     <Menu.Button className='bg-gray-800 rounded-full flex text-sm text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white'>
-                      <span className='sr-only'>Open user menu</span>
+                      <span className='sr-only'>Open Vendor menu</span>
                       <img
                         className='h-8 w-8 rounded-full'
                         src={user.imageUrl}
@@ -203,7 +187,7 @@ export default function Example() {
                   type='button'
                   className='ml-auto flex-shrink-0 bg-gray-800 rounded-full p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white'
                 >
-                  <span className='sr-only'>View notifications</span>
+                  <span className='sr-only'>Location: Orlando</span>
                   <BellIcon className='h-6 w-6' aria-hidden='true' />
                 </button>
               </div>
