@@ -16,6 +16,12 @@
     "incremental": true,
     "noUncheckedIndexedAccess": true
   },
+  "ts-node": {
+    "compilerOptions": {
+      "module": "CommonJS"
+    }
+  },
+
   "include": [
     "next-env.d.ts",
     "next-auth.d.ts",
