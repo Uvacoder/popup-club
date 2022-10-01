@@ -1,14 +1,14 @@
-import { popupData } from '../../temp/popupData';
+import { Popup } from '../types/popup';
 
-export default function Events() {
+export default function AllPopups({ popups }: { popups: Popup[] }) {
   return (
     <>
-      <div className='pt-6'>All events:</div>
+      <div className='pt-6'>All popups:</div>
       <ul
         role='list'
-        className='grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 pt-6'
+        className='grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3'
       >
-        {popupData.map((popup) => (
+        {popups?.map((popup) => (
           <li
             key={popup.id}
             className='col-span-1 divide-y divide-gray-200 rounded-lg bg-white shadow'

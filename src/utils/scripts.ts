@@ -90,7 +90,13 @@ async function returnAllPopups() {
     console.log(`${popup.id}  |  ${popup.name}`);
   });
   events.map((event) => {
-    console.log(`${event.popupId}  |  ${event.date}  |  ${event.location}`);
+    console.log(
+      `Popupid: ${event.popupId}  |  Eventid: ${
+        event.id
+      } | ${event.date.getMonth()}/${event.date.getDay()}/${event.date.getFullYear()}  |  ${
+        event.location
+      } | ${event.name}`
+    );
   });
 }
 
@@ -117,6 +123,19 @@ async function resetRecord() {
   });
 }
 
+async function updatePopup(eventid: string) {
+  await prisma.event.update({
+    where: {
+      id: eventid,
+    },
+    data: {
+      name: 'Post-hurricane relief',
+    },
+  });
+
+  console.log('Entry updated successfully');
+}
+
 // main()
 //   .then(async () => {
 //     await prisma.$disconnect();
@@ -137,17 +156,27 @@ returnAllPopups()
     process.exit(1);
   });
 
-createEvent()
-  .then(async () => {
-    await prisma.$disconnect();
-  })
-  .catch(async (e) => {
-    console.error(e);
-    await prisma.$disconnect();
-    process.exit(1);
-  });
+// createEvent()
+//   .then(async () => {
+//     await prisma.$disconnect();
+//   })
+//   .catch(async (e) => {
+//     console.error(e);
+//     await prisma.$disconnect();
+//     process.exit(1);
+//   });
 
 // resetRecord()
+//   .then(async () => {
+//     await prisma.$disconnect();
+//   })
+//   .catch(async (e) => {
+//     console.error(e);
+//     await prisma.$disconnect();
+//     process.exit(1);
+//   });
+
+// updatePopup('cl8hsof6l0003wwveq55d6oe6')
 //   .then(async () => {
 //     await prisma.$disconnect();
 //   })

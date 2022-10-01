@@ -1,6 +1,6 @@
-import type { NextPage } from "next";
-import Head from "next/head";
-import { trpc } from "../utils/trpc";
+import type { NextPage } from 'next';
+import Head from 'next/head';
+import { trpc } from '../utils/trpc';
 
 const Landing: NextPage = () => {
   return (
@@ -17,9 +17,7 @@ const Landing: NextPage = () => {
         </h1>
         <p className='text-2xl text-gray-700'>Discover your favorite</p>
         <div className='grid gap-3 pt-3 mt-3 text-center md:grid-cols-2 lg:w-2/3'></div>
-        <div className='pt-6 text-2xl text-blue-500 flex justify-center items-center w-full'>
-          HELLO FROM TRPC NOT REALLY
-        </div>
+        <div className='pt-6 text-2xl text-blue-500 flex justify-center items-center w-full'></div>
       </main>
     </>
   );
