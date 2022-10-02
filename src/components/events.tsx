@@ -1,53 +1,62 @@
 // import { popupData } from '../../temp/popupData';
-import { Event } from '../types/popup';
+import { Popup, Event } from '../types/popup';
+import Image from 'next/image';
 
-export default function Events({ events }: { events: Event[] }) {
+export default function Events(
+  { popups }: { popups: Popup[] },
+  { events }: { events: Event[] }
+) {
   return (
     <>
-      <div className='pt-6'>All events:</div>
+      <div className='pt-6'>All Events:</div>
       <ul
         role='list'
-        className='grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 pt-6'
+        className='grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3'
       >
-        {events?.map((event) => (
-          <li
-            key={event.id}
-            className='col-span-1 divide-y divide-gray-200 rounded-lg bg-white shadow'
-          >
-            <div className='flex w-full items-center justify-between space-x-6 p-6'>
-              <div className='flex-1'>
-                <div className='flex items-center space-x-3'>
+        {popups?.map((popup) => (
+          <>
+            {popup.Events?.map((event) => (
+              <li
+                key={event.id}
+                className='col-span-1 flex flex-col divide-y divide-gray-200 rounded-lg bg-white text-center shadow'
+              >
+                <div className='flex flex-1 flex-col p-4'>
                   <div>
-                    <h2 className=' text-lg font-bold text-gray-900'>
-                      {event.name ?? event.popup?.name}
-                    </h2>
-                    <h3 className='inline-block flex-shrink-0 rounded-full bg-gray-100 px-2 py-0.5 text-xs font-medium text-gray-800'>
+                    <Image
+                      className='mx-auto h-32 w-32 flex-shrink-0 rounded-full object-scale-down'
+                      src={popup.imageUrl ?? 'https://via.placeholder.com/150'}
+                      alt='Popup logo'
+                      height={150}
+                      width={150}
+                    />
+                  </div>
+                  <h3 className='mt-6 text-sm font-medium text-gray-900'>
+                    {event.name}
+                  </h3>
+                  <dl className='mt-1 flex flex-grow flex-col justify-between'>
+                    <dt className='sr-only'>Title</dt>
+                    <dd className='text-sm text-gray-500'>
+                      {popup.description}
+                    </dd>
+                    <dd className='text-sm'>
                       {event.date.getMonth() +
+                        1 +
                         '/' +
                         event.date.getDate() +
                         '/' +
                         event.date.getFullYear()}
-                    </h3>
-                  </div>
+                    </dd>
+                    <dt className='sr-only'>Role</dt>
+                    <dd className='mt-3'>
+                      <span className='rounded-full bg-green-100 px-2 py-1 text-xs font-medium text-green-800'>
+                        {event.location}
+                      </span>
+                    </dd>
+                  </dl>
                 </div>
-                <p className='mt-1 truncate text-sm text-gray-500'>
-                  {event.popup?.categories.map((category) => (
-                    <span
-                      key={category}
-                      className='inline-block bg-gray-100 rounded-full px-2 py-0.5 text-xs font-medium text-gray-800'
-                    >
-                      {category}
-                    </span>
-                  ))}
-                </p>
-              </div>
-              <img
-                className='h-10 w-10 flex-shrink-0 rounded-full bg-gray-300'
-                src={event.popup?.imageUrl}
-                alt=''
-              />
-            </div>
-          </li>
+              </li>
+            ))}
+          </>
         ))}
       </ul>
     </>

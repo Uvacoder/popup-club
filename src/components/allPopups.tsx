@@ -1,4 +1,5 @@
 import { Popup } from '../types/popup';
+import Image from 'next/image';
 
 export default function AllPopups({ popups }: { popups: Popup[] }) {
   return (
@@ -53,10 +54,12 @@ export default function AllPopups({ popups }: { popups: Popup[] }) {
                   ))}
                 </div>
               </div>
-              <img
+              <Image
                 className='h-10 w-10 flex-shrink-0 rounded-full bg-gray-300'
-                src={popup.imageUrl}
-                alt=''
+                src={popup.imageUrl ?? 'https://via.placeholder.com/150'}
+                alt='Popup logo'
+                height={75}
+                width={75}
               />
             </div>
           </li>
