@@ -4,11 +4,45 @@ import Events from '../components/events';
 import Nav from '../components/Nav';
 import AllPopups from '../components/allPopups';
 import { trpc } from '../utils/trpc';
+import { useState } from 'react';
+import { Event, Popup } from '../types/popup';
 
 const Home: NextPage = () => {
-  const hello = trpc.useQuery(['example.hello', { text: 'from tRPC' }]);
+  // const hello = trpc.useQuery(['example.hello', { text: 'from tRPC' }]);
 
-  const popups = trpc.useQuery(['popup.getPopups']);
+  const rawevents: Event[] = trpc
+    .useQuery(['event.getEvents'])
+    .data?.map((event) => {
+      return {
+        id: event.id,
+        popupId: event.popupId,
+        name: event.name,
+        date: event.date,
+        location: event.location,
+        popup: rawpopups?.find(
+          (popup) => popup.id?.toString() === event.popupId
+        ),
+      };
+    });
+
+  const rawpopups: Popup[] = trpc
+    .useQuery(['popup.getPopups'])
+    .data?.map((popup) => {
+      return {
+        id: popup.id,
+        name: popup.name,
+        description: popup.description,
+        basedIn: popup.basedIn,
+        imageUrl: popup.imageUrl,
+        categories: popup.categories,
+        isHot: popup.isHot,
+        orderType: popup.orderType,
+        Events: rawevents?.filter((event) => event.popupId === popup.id),
+      };
+    });
+
+  // console.table(rawevents);
+  // console.table(rawpopups);
 
   return (
     <>
@@ -26,9 +60,15 @@ const Home: NextPage = () => {
         className='
       max-w-7xl mx-auto sm:px-6 lg:px-8'
       >
-        <AllPopups popups={popups.data} />
+        {/* {rawevents?.map((event) => (
+          <div key={event.id}>
+            {event.name} {event.popupId} {event.id}
+          </div>
+        ))} */}
 
-        <Events />
+        <AllPopups popups={rawpopups} />
+
+        {/* <Events events={rawevents} /> */}
       </main>
     </>
   );

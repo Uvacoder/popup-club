@@ -176,12 +176,12 @@ returnAllPopups()
 //     process.exit(1);
 //   });
 
-// updatePopup('cl8hsof6l0003wwveq55d6oe6')
-//   .then(async () => {
-//     await prisma.$disconnect();
-//   })
-//   .catch(async (e) => {
-//     console.error(e);
-//     await prisma.$disconnect();
-//     process.exit(1);
-//   });
+updatePopup('cl8hsof6l0003wwveq55d6oe6')
+  .then(async () => {
+    await prisma.$disconnect();
+  })
+  .catch(async (e) => {
+    console.error(e);
+    await prisma.$disconnect();
+    process.exit(1);
+  });

@@ -35,6 +35,23 @@ export default function AllPopups({ popups }: { popups: Popup[] }) {
                     </span>
                   ))}
                 </p>
+                <div className=''>
+                  Events:
+                  {popup.Events?.map((event) => (
+                    <span
+                      key={event.id}
+                      className='inline-block bg-gray-100 rounded-full px-2 py-0.5 text-xs font-medium text-gray-800'
+                    >
+                      {event.name ?? popup.name} -{' '}
+                      {event.date.getMonth() +
+                        1 +
+                        '/' +
+                        event.date.getDate() +
+                        '/' +
+                        event.date.getFullYear()}
+                    </span>
+                  ))}
+                </div>
               </div>
               <img
                 className='h-10 w-10 flex-shrink-0 rounded-full bg-gray-300'
