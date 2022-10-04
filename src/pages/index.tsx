@@ -35,6 +35,7 @@ const Home: NextPage = () => {
         basedIn: popup.basedIn,
         imageUrl: popup.imageUrl,
         categories: popup.categories,
+        instagram: popup.instagram,
         isHot: popup.isHot,
         orderType: popup.orderType,
         Events: rawevents?.filter((event) => event.popupId === popup.id),
@@ -60,12 +61,6 @@ const Home: NextPage = () => {
         className='
       max-w-7xl mx-auto sm:px-6 lg:px-8'
       >
-        {/* {rawevents?.map((event) => (
-          <div key={event.id}>
-            {event.name} {event.popupId} {event.id}
-          </div>
-        ))} */}
-
         <AllPopups popups={rawpopups} />
 
         <Events popups={rawpopups} />

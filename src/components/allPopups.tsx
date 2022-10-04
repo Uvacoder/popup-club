@@ -10,7 +10,7 @@ export default function AllPopups({ popups }: { popups: Popup[] }) {
       Events: popup.Events?.sort((a, b) => {
         return new Date(a.date).getTime() - new Date(b.date).getTime();
       }),
-    };
+    } as Popup;
   });
 
   return (
@@ -38,14 +38,14 @@ export default function AllPopups({ popups }: { popups: Popup[] }) {
                 </div>
                 <div className='flex flex-col w-fit shrink'>
                   <div className='flex flex-row space-x-2'>
-                    {popup.instagram ?? (
+                    {typeof popup.instagram === 'string' ? (
                       <a
-                        href={popup.instagram ?? '#'}
+                        href={popup.instagram}
                         className='hover:cursor-pointer'
                       >
                         <Image src={'/instagram.svg'} width={17} height={17} />
                       </a>
-                    )}
+                    ) : null}
                     <ShareIcon
                       fill='black'
                       width={17}
