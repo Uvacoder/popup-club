@@ -4,9 +4,9 @@ export type Popup = {
   description: string;
   basedIn: string;
   imageUrl?: string;
-  instagram?: String;
-  facebook?: String;
-  youtube?: String;
+  instagram?: string;
+  facebook?: string;
+  youtube?: string;
   categories: string[];
   isHot: boolean;
   orderType: 'First come first serve' | 'Preorder';

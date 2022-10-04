@@ -68,7 +68,7 @@ const Home: NextPage = () => {
 
         <AllPopups popups={rawpopups} />
 
-        <Events popups={rawpopups} events={rawevents} />
+        <Events popups={rawpopups} />
       </main>
     </>
   );

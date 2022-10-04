@@ -2,10 +2,17 @@
 import { Popup, Event } from '../types/popup';
 import Image from 'next/image';
 
-export default function Events(
-  { popups }: { popups: Popup[] },
-  { events }: { events: Event[] }
-) {
+export default function Events({ popups }: { popups: Popup[] }) {
+  //Returns a list of popups with the events sorted by date
+  const sortedPopups = popups?.map((popup) => {
+    return {
+      ...popup,
+      Events: popup.Events?.sort((a, b) => {
+        return new Date(a.date).getTime() - new Date(b.date).getTime();
+      }),
+    };
+  });
+
   return (
     <>
       <div className='pt-6'>All Events:</div>
@@ -13,9 +20,9 @@ export default function Events(
         role='list'
         className='grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3'
       >
-        {popups?.map((popup) => (
+        {sortedPopups?.map((popup) => (
           <>
-            {popup.Events?.map((event) => (
+            {popup.Events?.slice(0, 1).map((event) => (
               <li
                 key={event.id}
                 className='col-span-1 flex flex-col divide-y divide-gray-200 rounded-lg bg-white text-center shadow'
@@ -31,7 +38,7 @@ export default function Events(
                     />
                   </div>
                   <h3 className='mt-6 text-sm font-medium text-gray-900'>
-                    {event.name}
+                    {event.location}
                   </h3>
                   <dl className='mt-1 flex flex-grow flex-col justify-between'>
                     <dt className='sr-only'>Title</dt>
@@ -39,17 +46,17 @@ export default function Events(
                       {popup.description}
                     </dd>
                     <dd className='text-sm'>
-                      {event.date.getMonth() +
+                      {event?.date.getMonth() +
                         1 +
                         '/' +
-                        event.date.getDate() +
+                        event?.date.getDate() +
                         '/' +
-                        event.date.getFullYear()}
+                        event?.date.getFullYear()}
                     </dd>
                     <dt className='sr-only'>Role</dt>
                     <dd className='mt-3'>
                       <span className='rounded-full bg-green-100 px-2 py-1 text-xs font-medium text-green-800'>
-                        {event.location}
+                        {event?.location}
                       </span>
                     </dd>
                   </dl>
