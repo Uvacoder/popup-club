@@ -59,7 +59,7 @@ const Home: NextPage = () => {
       <Nav />
       <main
         className='
-      max-w-7xl mx-auto sm:px-6 lg:px-8'
+      max-w-7xl mx-auto sm:px-6 lg:px-8 pb-32'
       >
         <AllPopups popups={rawpopups} />
 

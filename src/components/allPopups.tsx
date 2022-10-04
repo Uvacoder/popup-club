@@ -1,7 +1,6 @@
 import { Popup } from '../types/popup';
 import Image from 'next/image';
 import { HeartIcon, ShareIcon } from '@heroicons/react/solid';
-import Link from 'next/link';
 
 export default function AllPopups({ popups }: { popups: Popup[] }) {
   const sortedPopups = popups?.map((popup) => {
@@ -40,6 +39,7 @@ export default function AllPopups({ popups }: { popups: Popup[] }) {
                   <div className='flex flex-row space-x-2'>
                     {typeof popup.instagram === 'string' ? (
                       <a
+                        target={'_blank'}
                         href={popup.instagram}
                         className='hover:cursor-pointer'
                       >
@@ -61,11 +61,11 @@ export default function AllPopups({ popups }: { popups: Popup[] }) {
                     {popup.description}
                   </div>
                   <div className='text-xs font-semibold text-gray-900'>
-                    {popup.basedIn}
+                    Based in: {popup.basedIn}
                   </div>
                 </div>
               </div>
-              <p className='mt-1 truncate text-sm space-x-1 text-gray-500'>
+              <p className='mt-1 truncate text-sm space-x-1 py-2 text-gray-500'>
                 {popup.categories.map((category) => (
                   <span
                     key={category}
