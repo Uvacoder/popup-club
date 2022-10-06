@@ -98,5 +98,6 @@ model Location {
     state   String
     zip     String
     country String
+    mapsUrl String
     events  Event[]
 }

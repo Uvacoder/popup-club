@@ -97,25 +97,36 @@ async function returnAllPopups() {
 async function createEvent() {
   const event = await prisma.event.create({
     data: {
-      date: new Date('2023-4-15 18:30:00'),
+      date: new Date('2023-2-25 19:30:00'),
+      // name: "NEW YEAR'S PICKUP!",
       location: {
-        create: {
-          name: 'GBs Bottle Shop',
-          address: '531 Virginia Dr',
-          city: 'Orlando',
-          state: 'FL',
-          zip: '32803',
-          country: 'USA',
+        connect: {
+          id: 'cl8xb8jue0000ve7hek82sjmr',
         },
       },
       popup: {
         connect: {
-          id: 'cl8wnxxki0001veh07z33al4v',
+          id: 'cl8wnxxki0005veh0hd3kgem8',
         },
       },
     },
   });
   console.log(event);
+}
+
+async function createLocation() {
+  const location = await prisma.location.create({
+    data: {
+      name: 'Pour Choice Taphouse',
+      address: '1225 N Mills Ave',
+      city: 'Orlando',
+      state: 'FL',
+      zip: '32803',
+      country: 'USA',
+      mapsUrl: 'https://goo.gl/maps/uHQtYc3p4GPXJm769',
+    },
+  });
+  console.log(location);
 }
 
 async function resetRecord() {
@@ -126,17 +137,32 @@ async function resetRecord() {
   });
 }
 
-async function updatePopup(eventid: string) {
+async function updateEvent(eventid: string) {
   await prisma.event.update({
     where: {
       id: eventid,
     },
     data: {
-      name: 'Post-hurricane relief',
+      location: {
+        connect: {
+          id: 'cl8xacce00000ve9rjs8kmt62',
+        },
+      },
     },
   });
 
   console.log('Entry updated successfully');
+}
+
+async function updatePopup(popupid: string) {
+  await prisma.popup.update({
+    where: {
+      id: popupid,
+    },
+    data: {
+      website: 'https://blackmagicpizza.com/',
+    },
+  });
 }
 
 // main()
@@ -150,6 +176,16 @@ async function updatePopup(eventid: string) {
 //   });
 
 // returnAllPopups()
+//   .then(async () => {
+//     await prisma.$disconnect();
+//   })
+//   .catch(async (e) => {
+//     console.error(e);
+//     await prisma.$disconnect();
+//     process.exit(1);
+//   });
+
+// createLocation()
 //   .then(async () => {
 //     await prisma.$disconnect();
 //   })
@@ -179,7 +215,17 @@ createEvent()
 //     process.exit(1);
 //   });
 
-// updatePopup('cl8hsof6l0003wwveq55d6oe6')
+// updatePopup('cl8wnxxki0000veh0xjck9rla')
+//   .then(async () => {
+//     await prisma.$disconnect();
+//   })
+//   .catch(async (e) => {
+//     console.error(e);
+//     await prisma.$disconnect();
+//     process.exit(1);
+//   });
+
+// updateEvent()
 //   .then(async () => {
 //     await prisma.$disconnect();
 //   })

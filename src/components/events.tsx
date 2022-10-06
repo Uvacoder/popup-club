@@ -88,11 +88,25 @@ export default function Events({ popups }: { popups: Popup[] }) {
                           : popup.name}
                       </div>
                       <div className='inline-block flex-shrink-0 text-sm font-normal text-gray-900 -mt-1'>
+                        {typeof event.name === 'string' ? (
+                          <>
+                            <span className='text-xs font-medium'>
+                              by {popup.name}
+                            </span>
+                            {' • '}
+                          </>
+                        ) : null}
                         @{event.location.name}
                       </div>
-                      <div className='inline-block flex-shrink-0 text-xs font-thin tracking-tighter hover:cursor-pointer'>
-                        {event.location.address} {event.location.city},{' '}
-                        {event.location.state}, {event.location.zip}
+                      <div className='-mt-1'>
+                        <a
+                          href={event.location.mapsUrl}
+                          target='_blank'
+                          className='inline-block flex-shrink-0 text-xs tracking-tight hover:cursor-pointer'
+                        >
+                          {event.location.address} {event.location.city},{' '}
+                          {event.location.state}, {event.location.zip}
+                        </a>
                       </div>
                     </div>
                   </div>

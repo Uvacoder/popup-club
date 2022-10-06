@@ -13,6 +13,7 @@ const Home: NextPage = () => {
     .data?.map((location) => {
       return {
         ...location,
+        mapsUrl: location.mapsUrl,
         events: rawevents?.filter((event) => event.locationid === location.id),
       };
     });

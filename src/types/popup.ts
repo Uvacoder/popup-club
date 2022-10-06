@@ -28,6 +28,7 @@ export type Location = {
   state: string;
   zip: string;
   country: string;
+  mapsUrl: string;
   events: Event[];
 };
 
