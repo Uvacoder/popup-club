@@ -1,23 +1,41 @@
 export type Popup = {
-  id?: number;
+  id: number;
   name: string;
   description: string;
   basedIn: string;
-  imageUrl?: string;
-  instagram?: string;
-  facebook?: string;
-  youtube?: string;
+  links: Links;
   categories: string[];
   isHot: boolean;
   orderType: 'First come first serve' | 'Preorder';
-  Events?: Event[];
+  events?: Event[];
 };
 
 export type Event = {
   id: number;
   popupId: string;
+  locationid: string;
   name?: string;
   date: Date;
-  location: string;
   popup: Popup;
+  location: Location;
+};
+
+export type Location = {
+  id: number;
+  name: string;
+  address: string;
+  city: string;
+  state: string;
+  zip: string;
+  country: string;
+  events: Event[];
+};
+
+export type Links = {
+  imageUrl?: string;
+  facebook?: string;
+  instagram?: string;
+  twitter?: string;
+  website?: string;
+  youtube?: string;
 };

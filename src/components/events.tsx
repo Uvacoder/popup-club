@@ -1,14 +1,22 @@
 // import { popupData } from '../../temp/popupData';
 import { Popup, Event } from '../types/popup';
 import Image from 'next/image';
-import { HeartIcon, ShareIcon } from '@heroicons/react/solid';
+import SocialMedia from './socialMedia';
+import Tags from './tags';
 
 export default function Events({ popups }: { popups: Popup[] }) {
   //Returns a list of popups with the events sorted by date
   const sortedPopups = popups?.map((popup) => {
     return {
-      ...popup,
-      Events: popup.Events?.sort((a, b) => {
+      id: popup.id,
+      name: popup.name,
+      description: popup.description,
+      basedIn: popup.basedIn,
+      links: popup.links,
+      categories: popup.categories,
+      isHot: popup.isHot,
+      orderType: popup.orderType,
+      events: popup.events?.sort((a, b) => {
         return new Date(a.date).getTime() - new Date(b.date).getTime();
       }),
     };
@@ -32,20 +40,18 @@ export default function Events({ popups }: { popups: Popup[] }) {
       >
         {sortedPopups?.map((popup) => (
           <>
-            {popup.Events?.slice(0, 1).map((event) => (
+            {popup.events?.slice(0, 1).map((event) => (
               <li
                 key={event.id}
-                className='flex flex-col border divide-y divide-zinc-200 rounded-lg bg-white shadow-sm hover:bg-zinc-50 hover:shadow-md transition-colorss'
+                className='flex flex-col border border-collapse divide-y divide-zinc-200 rounded-lg shadow-sm hover:bg-zinc-50 hover:shadow-md transition-colors bg-gradient-to-br from-zinc-50 to-slate-100 hover:bg-gradient-to-br hover:from-zinc-50 '
               >
-                <div className='p-4'>
+                <div className='p-4 '>
                   <div className='flex flex-row object-cover space-x-2'>
                     <div className='h-fit space-y-3 flex'>
                       <span className='relative inline-block'>
                         <Image
                           className='h-10 w-10 flex-shrink-0 rounded-full bg-gray-300'
-                          src={
-                            popup.imageUrl ?? 'https://via.placeholder.com/150'
-                          }
+                          src={popup.links?.imageUrl ?? '/hotdog.jpg'}
                           alt=''
                           width={75}
                           height={75}
@@ -56,83 +62,49 @@ export default function Events({ popups }: { popups: Popup[] }) {
                           </span>
                         ) : null}
                       </span>
-                      {/* <Image
-                        className='h-10 w-10 flex-shrink-0 rounded-full bg-gray-300'
-                        src={
-                          popup.imageUrl ?? 'https://via.placeholder.com/150'
-                        }
-                        alt='Popup logo'
-                        height={75}
-                        width={75}
-                      /> */}
                     </div>
                     {/* Social media */}
                     <div className='flex flex-col w-full'>
-                      {/* <div className='flex flex-col'></div> */}
-                      {/* Social media */}
-                      <div className='flex flex-col w-full '>
-                        <div className='grid grid-cols-3 h-fit'>
-                          <div className='text-xs font-semibold text-gray-900 col-span-2'>
-                            {event.date.getMonth() +
-                              1 +
-                              '/' +
-                              event.date.getDate() +
-                              '/' +
-                              event.date.getFullYear()}
-                            {' • '}@{convertTime(event.date)}
-                          </div>
-
-                          <div className='flex flex-row space-x-2  col-start-3 justify-end'>
-                            {typeof popup.instagram === 'string' ? (
-                              <a
-                                target={'_blank'}
-                                href={popup.instagram}
-                                className='hover:cursor-pointer'
-                              >
-                                <Image
-                                  src={'/instagram.svg'}
-                                  width={17}
-                                  height={17}
-                                />
-                              </a>
-                            ) : null}
-                            <ShareIcon
-                              fill='black'
-                              width={17}
-                              height={17}
-                              className=''
-                            />{' '}
-                            <HeartIcon
-                              fill='red'
-                              width={17}
-                              height={17}
-                              className=''
-                            />
-                          </div>
+                      <div className='grid grid-cols-3 h-4'>
+                        <div className='text-xs font-semibold text-gray-900 col-span-2'>
+                          {event.date.getMonth() +
+                            1 +
+                            '/' +
+                            event.date.getDate() +
+                            '/' +
+                            event.date.getFullYear()}
+                          {' • '}
+                          <span className='font-bold'>
+                            @{convertTime(event.date)}
+                          </span>
+                        </div>
+                        <div className='flex flex-row space-x-2 col-start-3 justify-end'>
+                          <SocialMedia links={popup.links} />
                         </div>
                       </div>
-                      <div className='text-lg font-bold text-gray-900 '>
+                      <div className='text-xl font-bold text-gray-900 tracking-tight antialiased'>
                         {typeof event.name === 'string'
                           ? event.name
                           : popup.name}
                       </div>
-                      <div className='inline-block flex-shrink-0 text-sm font-normal text-gray-900'>
-                        @{event.location}
+                      <div className='inline-block flex-shrink-0 text-sm font-normal text-gray-900 -mt-1'>
+                        @{event.location.name}
                       </div>
-                      <div className='inline-block flex-shrink-0 text-xs font-semibold text-gray-900'>
-                        Full address
+                      <div className='inline-block flex-shrink-0 text-xs font-thin tracking-tighter hover:cursor-pointer'>
+                        {event.location.address} {event.location.city},{' '}
+                        {event.location.state}, {event.location.zip}
                       </div>
                     </div>
                   </div>
-                  <p className='mt-1 truncate text-sm space-x-1 py-2 text-gray-500'>
-                    {popup.categories.map((category) => (
-                      <span
-                        key={category}
-                        className='inline-block bg-gray-100 hover:bg-gray-200 hover:cursor-pointer rounded-full px-2 py-0.5 text-xs font-medium text-gray-800'
-                      >
-                        {category}
-                      </span>
-                    ))}
+                  <Tags tags={popup.categories} />
+                  {/* Implement orderType somewhere
+                  {popup.orderType === 'Preorder' ? (
+                    <span className='text-xs text-semibold text-red-500'>
+                      {'*Preorder! ->'}
+                    </span>
+                  ) : null} */}
+                  <p className='text-sm text-semibold text-gray-800'>
+                    {popup.description}
                   </p>
                 </div>
               </li>

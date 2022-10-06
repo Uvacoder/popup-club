@@ -5,20 +5,26 @@ import Nav from '../components/Nav';
 import AllPopups from '../components/allPopups';
 import { trpc } from '../utils/trpc';
 import { useState } from 'react';
-import { Event, Popup } from '../types/popup';
+import { Event, Location, Popup } from '../types/popup';
 
 const Home: NextPage = () => {
-  // const hello = trpc.useQuery(['example.hello', { text: 'from tRPC' }]);
+  const rawlocations: Location[] = trpc
+    .useQuery(['location.getLocations'])
+    .data?.map((location) => {
+      return {
+        ...location,
+        events: rawevents?.filter((event) => event.locationid === location.id),
+      };
+    });
 
   const rawevents: Event[] = trpc
     .useQuery(['event.getEvents'])
     .data?.map((event) => {
       return {
-        id: event.id,
-        popupId: event.popupId,
-        name: event.name,
-        date: event.date,
-        location: event.location,
+        ...event,
+        location: rawlocations?.find(
+          (location) => location.id.toString() === event.locationId
+        ),
         popup: rawpopups?.find(
           (popup) => popup.id?.toString() === event.popupId
         ),
@@ -29,16 +35,17 @@ const Home: NextPage = () => {
     .useQuery(['popup.getPopups'])
     .data?.map((popup) => {
       return {
-        id: popup.id,
-        name: popup.name,
-        description: popup.description,
-        basedIn: popup.basedIn,
-        imageUrl: popup.imageUrl,
-        categories: popup.categories,
-        instagram: popup.instagram,
-        isHot: popup.isHot,
-        orderType: popup.orderType,
-        Events: rawevents?.filter((event) => event.popupId === popup.id),
+        ...popup,
+        links: {
+          imageUrl: popup.imageUrl,
+          instagram: popup.instagram,
+          facebook: popup.facebook,
+          twitter: popup.twitter,
+          website: popup.website,
+          youtube: popup.youtube,
+        },
+
+        events: rawevents?.filter((event) => event.popupId === popup.id),
       };
     });
 
@@ -62,7 +69,6 @@ const Home: NextPage = () => {
       max-w-7xl mx-auto sm:px-6 lg:px-8 pb-32'
       >
         <AllPopups popups={rawpopups} />
-
         <Events popups={rawpopups} />
       </main>
     </>

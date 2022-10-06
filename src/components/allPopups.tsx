@@ -1,12 +1,13 @@
 import { Popup } from '../types/popup';
 import Image from 'next/image';
-import { HeartIcon, ShareIcon } from '@heroicons/react/solid';
+import SocialMedia from './socialMedia';
+import Tags from './tags';
 
 export default function AllPopups({ popups }: { popups: Popup[] }) {
   const sortedPopups = popups?.map((popup) => {
     return {
       ...popup,
-      Events: popup.Events?.sort((a, b) => {
+      Events: popup.events?.sort((a, b) => {
         return new Date(a.date).getTime() - new Date(b.date).getTime();
       }),
     } as Popup;
@@ -29,32 +30,21 @@ export default function AllPopups({ popups }: { popups: Popup[] }) {
                 <div className='h-fit space-y-3 flex'>
                   <Image
                     className='h-10 w-10 flex-shrink-0 rounded-full bg-gray-300'
-                    src={popup.imageUrl ?? 'https://via.placeholder.com/150'}
+                    src={
+                      typeof popup.links?.imageUrl === 'string'
+                        ? popup.links?.imageUrl
+                        : '/hotdog.jpg'
+                    }
                     alt='Popup logo'
                     height={75}
                     width={75}
                   />
                 </div>
                 <div className='flex flex-col w-fit shrink'>
-                  <div className='flex flex-row space-x-2'>
-                    {typeof popup.instagram === 'string' ? (
-                      <a
-                        target={'_blank'}
-                        href={popup.instagram}
-                        className='hover:cursor-pointer'
-                      >
-                        <Image src={'/instagram.svg'} width={17} height={17} />
-                      </a>
-                    ) : null}
-                    <ShareIcon
-                      fill='black'
-                      width={17}
-                      height={17}
-                      className=''
-                    />{' '}
-                    <HeartIcon fill='red' width={17} height={17} className='' />
+                  <div className='flex flex-row space-x-2 h-5'>
+                    <SocialMedia links={popup.links} />
                   </div>
-                  <div className='text-lg font-bold text-gray-900'>
+                  <div className='text-xl font-bold text-gray-900 -mt-1 tracking-tight antialiased'>
                     {popup.name}
                   </div>
                   <div className='inline-block flex-shrink-0 text-xs font-normal text-gray-800'>
@@ -65,16 +55,7 @@ export default function AllPopups({ popups }: { popups: Popup[] }) {
                   </div>
                 </div>
               </div>
-              <p className='mt-1 truncate text-sm space-x-1 py-2 text-gray-500'>
-                {popup.categories.map((category) => (
-                  <span
-                    key={category}
-                    className='inline-block bg-gray-100 hover:bg-gray-200 hover:cursor-pointer rounded-full px-2 py-0.5 text-xs font-medium text-gray-800'
-                  >
-                    {category}
-                  </span>
-                ))}
-              </p>
+              <Tags tags={popup.categories} />
             </div>
           </li>
         ))}
