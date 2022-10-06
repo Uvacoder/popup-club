@@ -1,5 +1,6 @@
 import { PrismaClient } from '@prisma/client';
 import { popupData } from '../../temp/popupData';
+import { Popup } from '../types/popup';
 
 const prisma = new PrismaClient();
 
@@ -7,27 +8,20 @@ const data = popupData.map((popup) => {
   return {
     name: popup.name,
     description: popup.description,
-    imageUrl: popup.imageUrl,
+    basedIn: popup.basedIn,
+    imageUrl: popup.links.imageUrl,
+    instagram: popup.links.instagram,
     categories: popup.categories,
     isHot: popup.isHot,
     orderType: popup.orderType,
-    basedIn: popup.basedIn,
   };
 });
 
 // Create a new popup
 async function main() {
   const user = await prisma.popup.createMany({
-    data: {
-      name: 'Bigass Hotdogs',
-      description: 'fuck you and your mustard',
-      imageUrl:
-        'https://i.kym-cdn.com/photos/images/original/001/879/602/b66.jpg',
-      categories: ['Hotdogs', 'Bitch'],
-      isHot: true,
-      orderType: 'Preorder',
-      basedIn: 'Orlando',
-    },
+    data,
+    skipDuplicates: true,
   });
   console.log(user);
 }
@@ -93,9 +87,9 @@ async function returnAllPopups() {
     console.log(
       `Popupid: ${event.popupId}  |  Eventid: ${
         event.id
-      } | ${event.date.getMonth()}/${event.date.getDay()}/${event.date.getFullYear()}  |  ${
-        event.location
-      } | ${event.name}`
+      } | ${event.date.getMonth()}/${event.date.getDay()}/${event.date.getFullYear()}  | ${
+        event.name
+      }`
     );
   });
 }
@@ -103,11 +97,20 @@ async function returnAllPopups() {
 async function createEvent() {
   const event = await prisma.event.create({
     data: {
-      date: new Date('2023-1-4 18:00:00'),
-      location: "Will's Pub",
+      date: new Date('2023-4-15 18:30:00'),
+      location: {
+        create: {
+          name: 'GBs Bottle Shop',
+          address: '531 Virginia Dr',
+          city: 'Orlando',
+          state: 'FL',
+          zip: '32803',
+          country: 'USA',
+        },
+      },
       popup: {
         connect: {
-          id: 'cl8hy7s8e0006r1verdqzz4n6',
+          id: 'cl8wnxxki0001veh07z33al4v',
         },
       },
     },
@@ -146,17 +149,7 @@ async function updatePopup(eventid: string) {
 //     process.exit(1);
 //   });
 
-returnAllPopups()
-  .then(async () => {
-    await prisma.$disconnect();
-  })
-  .catch(async (e) => {
-    console.error(e);
-    await prisma.$disconnect();
-    process.exit(1);
-  });
-
-// createEvent()
+// returnAllPopups()
 //   .then(async () => {
 //     await prisma.$disconnect();
 //   })
@@ -165,6 +158,16 @@ returnAllPopups()
 //     await prisma.$disconnect();
 //     process.exit(1);
 //   });
+
+createEvent()
+  .then(async () => {
+    await prisma.$disconnect();
+  })
+  .catch(async (e) => {
+    console.error(e);
+    await prisma.$disconnect();
+    process.exit(1);
+  });
 
 // resetRecord()
 //   .then(async () => {
@@ -176,12 +179,12 @@ returnAllPopups()
 //     process.exit(1);
 //   });
 
-updatePopup('cl8hsof6l0003wwveq55d6oe6')
-  .then(async () => {
-    await prisma.$disconnect();
-  })
-  .catch(async (e) => {
-    console.error(e);
-    await prisma.$disconnect();
-    process.exit(1);
-  });
+// updatePopup('cl8hsof6l0003wwveq55d6oe6')
+//   .then(async () => {
+//     await prisma.$disconnect();
+//   })
+//   .catch(async (e) => {
+//     console.error(e);
+//     await prisma.$disconnect();
+//     process.exit(1);
+//   });

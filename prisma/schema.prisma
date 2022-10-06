@@ -69,8 +69,10 @@ model Popup {
     description String
     basedIn     String
     imageUrl    String?
-    instagram   String?
     facebook    String?
+    instagram   String?
+    twitter     String?
+    website     String?
     youtube     String?
     categories  String[]
     isHot       Boolean
@@ -79,10 +81,22 @@ model Popup {
 }
 
 model Event {
-    id       String   @id @default(cuid())
-    popupId  String
-    name     String?
-    location String?
-    date     DateTime
-    popup    Popup    @relation(fields: [popupId], references: [id])
+    id         String   @id @default(cuid())
+    popupId    String
+    locationId String
+    name       String?
+    date       DateTime
+    location   Location @relation(fields: [locationId], references: [id])
+    popup      Popup    @relation(fields: [popupId], references: [id])
+}
+
+model Location {
+    id      String  @id @default(cuid())
+    name    String
+    address String
+    city    String
+    state   String
+    zip     String
+    country String
+    events  Event[]
 }
