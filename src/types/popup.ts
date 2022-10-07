@@ -7,7 +7,7 @@ export type Popup = {
   categories: string[];
   isHot: boolean;
   orderType: 'First come first serve' | 'Preorder';
-  events?: Event[];
+  events: Event[];
 };
 
 export type Event = {

@@ -4,6 +4,15 @@ import Image from 'next/image';
 import SocialMedia from './socialMedia';
 import Tags from './tags';
 
+export function convertTime(date: Date) {
+  const hours = date.getHours();
+  const minutes = date.getMinutes();
+  const ampm = hours >= 12 ? 'pm' : 'am';
+  const hours12 = hours % 12 || 12;
+  const minutesStr = minutes < 10 ? '0' + minutes : minutes;
+  return hours12 + ':' + minutesStr + ampm;
+}
+
 export default function Events({ popups }: { popups: Popup[] }) {
   //Returns a list of popups with the events sorted by date
   const sortedPopups = popups?.map((popup) => {
@@ -22,15 +31,6 @@ export default function Events({ popups }: { popups: Popup[] }) {
     };
   });
 
-  function convertTime(date: Date) {
-    const hours = date.getHours();
-    const minutes = date.getMinutes();
-    const ampm = hours >= 12 ? 'pm' : 'am';
-    const hours12 = hours % 12 || 12;
-    const minutesStr = minutes < 10 ? '0' + minutes : minutes;
-    return hours12 + ':' + minutesStr + ampm;
-  }
-
   return (
     <>
       <div className='pt-6'>All Events:</div>
@@ -40,10 +40,10 @@ export default function Events({ popups }: { popups: Popup[] }) {
       >
         {sortedPopups?.map((popup) => (
           <>
-            {popup.events?.slice(0, 1).map((event) => (
+            {popup.events.slice(0, 1).map((event) => (
               <li
                 key={event.id}
-                className='flex flex-col border border-collapse divide-y divide-zinc-200 rounded-lg shadow-sm hover:bg-zinc-50 hover:shadow-md transition-colors bg-gradient-to-br from-zinc-50 to-slate-100 hover:bg-gradient-to-br hover:from-zinc-50 '
+                className='flex flex-col border border-collapse divide-y divide-zinc-200 rounded-lg shadow-sm hover:bg-zinc-50 hover:shadow-md transition-colors'
               >
                 <div className='p-4 '>
                   <div className='flex flex-row object-cover space-x-2'>

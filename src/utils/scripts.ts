@@ -17,14 +17,14 @@ const data = popupData.map((popup) => {
   };
 });
 
-// Create a new popup
-async function main() {
-  const user = await prisma.popup.createMany({
-    data,
-    skipDuplicates: true,
-  });
-  console.log(user);
-}
+// // Create a new popup from the data array
+// async function main() {
+//   const user = await prisma.popup.createMany({
+//     data,
+//     skipDuplicates: true,
+//   });
+//   console.log(user);
+// }
 
 //Read all popups
 // async function main() {
@@ -32,30 +32,31 @@ async function main() {
 //   console.log(popups);
 // }
 
-//Create a new popup with many events
-// async function main() {
-//   const popup = await prisma.popup.create({
-//     data: {
-//       name: 'Black Magic Pizza',
-//       description: "Orlando's most exclusive pizza",
-//       imageUrl:
-//         'https://i.kym-cdn.com/photos/images/original/001/879/602/b66.jpg',
-//       categories: ['Neapolitan', 'pizza'],
-//       isHot: true,
-//       orderType: 'First come first serve',
-//       basedIn: 'Orlando',
-//       Events: {
-//         create: [
-//           {
-//             date: new Date('2022-12-12 18:30:00'),
-//             location: "GB's Bottle Shop",
-//           },
-//         ],
-//       },
-//     },
-//   });
-//   console.log(`JUST ADDED: \n ${popup}`);
-// }
+// Create a new popup with many events
+async function main() {
+  const popup = await prisma.popup.create({
+    data: {
+      name: 'Hot Asian Buns',
+      description: 'HANDCRAFTED STEAMED BAO',
+      imageUrl: '/hotasianbuns.jpg',
+      categories: ['Asian', 'Bao'],
+      isHot: true,
+      instagram: 'https://www.instagram.com/hot_asian_buns/',
+      // website: 'https://www.cholodogs.com/',
+      orderType: 'First come first serve',
+      basedIn: 'Orlando',
+      // Events: {
+      //   create: [
+      //     {
+      //       date: new Date('2022-12-12 18:30:00'),
+      //       location: "GB's Bottle Shop",
+      //     },
+      //   ],
+      // },
+    },
+  });
+  console.log(`JUST ADDED: \n ${popup.name}`);
+}
 
 //Create many popups with many events
 // async function main() {
@@ -97,16 +98,16 @@ async function returnAllPopups() {
 async function createEvent() {
   const event = await prisma.event.create({
     data: {
-      date: new Date('2023-2-25 19:30:00'),
+      date: new Date('2023-5-9 19:30:00'),
       // name: "NEW YEAR'S PICKUP!",
       location: {
         connect: {
-          id: 'cl8xb8jue0000ve7hek82sjmr',
+          id: 'cl8xbephd0000vepq4119xq7g',
         },
       },
       popup: {
         connect: {
-          id: 'cl8wnxxki0005veh0hd3kgem8',
+          id: 'cl8wnxxki0000veh0xjck9rla',
         },
       },
     },

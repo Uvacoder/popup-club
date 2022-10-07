@@ -46,12 +46,13 @@ const Home: NextPage = () => {
           youtube: popup.youtube,
         },
 
-        events: rawevents?.filter((event) => event.popupId === popup.id),
+        events: rawevents
+          ?.filter((event) => event.popupId === popup.id)
+          .sort((a, b) => {
+            return new Date(a.date).getTime() - new Date(b.date).getTime();
+          }),
       };
     });
-
-  // console.table(rawevents);
-  // console.table(rawpopups);
 
   return (
     <>
@@ -69,7 +70,16 @@ const Home: NextPage = () => {
         className='
       max-w-7xl mx-auto sm:px-6 lg:px-8 pb-32'
       >
-        <AllPopups popups={rawpopups} />
+        <div className='pt-6'>All popups:</div>
+        <ul
+          role='list'
+          className='grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3'
+        >
+          {rawpopups?.map((popup) => (
+            <AllPopups popup={popup} />
+          ))}
+        </ul>
+
         <Events popups={rawpopups} />
       </main>
     </>
