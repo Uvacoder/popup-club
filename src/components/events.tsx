@@ -102,6 +102,7 @@ export default function Events({ popups }: { popups: Popup[] }) {
                         <a
                           href={event.location.mapsUrl}
                           target='_blank'
+                          rel='noreferrer'
                           className='inline-block flex-shrink-0 text-xs tracking-tight hover:cursor-pointer'
                         >
                           {event.location.address} {event.location.city},{' '}

@@ -9,6 +9,7 @@ export default function SocialMedia({ links }: { links: Links }) {
       {typeof links.instagram === 'string' ? (
         <a
           target={'_blank'}
+          rel={'noreferrer'}
           href={links.instagram}
           className='hover:cursor-pointer'
         >
@@ -18,6 +19,7 @@ export default function SocialMedia({ links }: { links: Links }) {
       {/* {typeof links.website === 'string' ? (
         <a
           target={'_blank'}
+          rel={'noreferrer'}
           href={links.website}
           className='hover:cursor-pointer'
         >
