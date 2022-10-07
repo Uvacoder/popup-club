@@ -81,13 +81,14 @@ model Popup {
 }
 
 model Event {
-    id         String   @id @default(cuid())
-    popupId    String
-    locationId String
-    name       String?
-    date       DateTime
-    location   Location @relation(fields: [locationId], references: [id])
-    popup      Popup    @relation(fields: [popupId], references: [id])
+    id          String   @id @default(cuid())
+    popupId     String
+    locationId  String
+    name        String?
+    description String?
+    date        DateTime
+    location    Location @relation(fields: [locationId], references: [id])
+    popup       Popup    @relation(fields: [popupId], references: [id])
 }
 
 model Location {

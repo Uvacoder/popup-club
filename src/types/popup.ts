@@ -14,6 +14,7 @@ export type Event = {
   id: number;
   popupId: string;
   locationid: string;
+  description?: string;
   name?: string;
   date: Date;
   popup: Popup;

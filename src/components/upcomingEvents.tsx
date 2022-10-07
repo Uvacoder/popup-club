@@ -15,23 +15,24 @@ export default function UpcomingEvents({ popup }: { popup: Popup }) {
   return (
     <>
       <div className='overflow-hidden rounded-md border border-gray-300 bg-white'>
-        <ol role='list' className='divide-y divide-gray-300'>
+        <ol role='list' className='divide-y divide-gray-300 '>
           {popup.events?.slice(0, upperLimit).map((event) => (
-            <li key={event.id} className='px-6 py-4'>
+            <li key={event.id} className='px-6 py-4 mx-5'>
               <span className='flex flex-row justify-between text-xs'>
                 {event.date
                   .toLocaleString('default', { month: 'long' })
                   .slice(0, 3) +
                   ' ' +
                   event.date.getDate() +
-                  ' ' +
+                  ', ' +
                   event.date.getFullYear()}
                 <span className='flex flex-row'>@{event.location.name}</span>
               </span>
               <span className='flex flex-row justify-between text-xs'>
                 {convertTime(event.date)}
                 <span className='flex flex-row'>
-                  {event.location.address} {event.location.city}{' '}
+                  {event.location.address} {event.location.city}
+                  {', '}
                   {event.location.state}
                 </span>
               </span>

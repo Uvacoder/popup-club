@@ -118,7 +118,14 @@ export default function Events({ popups }: { popups: Popup[] }) {
                     </span>
                   ) : null} */}
                   <p className='text-sm text-semibold text-gray-800'>
-                    {popup.description}
+                    {typeof event.description === 'string' ? (
+                      <span className='font-medium'>
+                        {' '}
+                        On special: {event.description}
+                      </span>
+                    ) : (
+                      popup.description
+                    )}
                   </p>
                 </div>
               </li>
