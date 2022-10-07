@@ -9,8 +9,6 @@ import { Event, Location, Popup, Tags } from '../types/popup';
 import { z } from 'zod';
 
 const Home: NextPage = () => {
-  //This will pull the tags that match the popup id
-
   const rawlocations: Location[] = trpc
     .useQuery(['location.getLocations'])
     .data?.map((location) => {
@@ -95,7 +93,7 @@ const Home: NextPage = () => {
           className='grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3'
         >
           {rawpopups?.map((popup) => (
-            <AllPopups popup={popup} />
+            <AllPopups popup={popup} key={popup.id} />
           ))}
         </ul>
 

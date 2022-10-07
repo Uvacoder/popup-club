@@ -14,7 +14,12 @@ export default function AllPopups({ popup }: { popup: Popup }) {
   return (
     <>
       {isShown && (
-        <PopupModal isShown={isShown} setIsShown={setIsShown} popup={popup} />
+        <PopupModal
+          key={popup.id}
+          isShown={isShown}
+          setIsShown={setIsShown}
+          popup={popup}
+        />
       )}
       <li
         key={popup.id}
