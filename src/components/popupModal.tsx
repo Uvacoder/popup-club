@@ -4,6 +4,7 @@ import { Dialog, Transition } from '@headlessui/react';
 import { Popup } from '../types/popup';
 import Image from 'next/image';
 import UpcomingEvents from './upcomingEvents';
+import SocialMedia from './socialMedia';
 
 export default function PopupModal({
   isShown,
@@ -41,6 +42,9 @@ export default function PopupModal({
               leaveTo='opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95'
             >
               <Dialog.Panel className='relative transform overflow-hidden rounded-lg bg-white px-4 pt-5 pb-4 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-sm sm:p-6'>
+                <div className='flex absolute right-4 top-2 space-x-2'>
+                  <SocialMedia links={popup.links} />
+                </div>
                 <div>
                   <div className='mx-auto flex items-center justify-center rounded-full'>
                     <Image

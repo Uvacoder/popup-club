@@ -22,7 +22,7 @@ export default function Events({ popups }: { popups: Popup[] }) {
       description: popup.description,
       basedIn: popup.basedIn,
       links: popup.links,
-      categories: popup.categories,
+      tags: popup.tags,
       isHot: popup.isHot,
       orderType: popup.orderType,
       events: popup.events?.sort((a, b) => {
@@ -110,7 +110,9 @@ export default function Events({ popups }: { popups: Popup[] }) {
                       </div>
                     </div>
                   </div>
-                  <Tags tags={popup.categories} />
+                  {/* {popup.tags.map((tag) => (
+                    <Tags key={tag.id} tag={tag.name} />
+                  ))} */}
                   {/* Implement orderType somewhere
                   {popup.orderType === 'Preorder' ? (
                     <span className='text-xs text-semibold text-red-500'>

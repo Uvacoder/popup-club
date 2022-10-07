@@ -1,19 +1,29 @@
 import { PrismaClient } from '@prisma/client';
-import { popupData } from '../../temp/popupData';
-import { Popup } from '../types/popup';
+import { popupData, locationData } from '../../temp/popupData';
 
 const prisma = new PrismaClient();
 
-const data = popupData.map((popup) => {
+const popup = popupData.map((popup) => {
   return {
     name: popup.name,
     description: popup.description,
     basedIn: popup.basedIn,
     imageUrl: popup.links.imageUrl,
     instagram: popup.links.instagram,
-    categories: popup.categories,
     isHot: popup.isHot,
     orderType: popup.orderType,
+  };
+});
+
+const locations = locationData.map((location) => {
+  return {
+    name: location.name,
+    address: location.address,
+    city: location.city,
+    state: location.state,
+    zip: location.zip,
+    country: location.country,
+    mapsUrl: location.mapsUrl,
   };
 });
 
@@ -33,30 +43,29 @@ const data = popupData.map((popup) => {
 // }
 
 // Create a new popup with many events
-async function main() {
-  const popup = await prisma.popup.create({
-    data: {
-      name: 'Hot Asian Buns',
-      description: 'HANDCRAFTED STEAMED BAO',
-      imageUrl: '/hotasianbuns.jpg',
-      categories: ['Asian', 'Bao'],
-      isHot: true,
-      instagram: 'https://www.instagram.com/hot_asian_buns/',
-      // website: 'https://www.cholodogs.com/',
-      orderType: 'First come first serve',
-      basedIn: 'Orlando',
-      // Events: {
-      //   create: [
-      //     {
-      //       date: new Date('2022-12-12 18:30:00'),
-      //       location: "GB's Bottle Shop",
-      //     },
-      //   ],
-      // },
-    },
-  });
-  console.log(`JUST ADDED: \n ${popup.name}`);
-}
+// async function main() {
+//   const popup = await prisma.popup.create({
+//     data: {
+//       name: 'Hot Asian Buns',
+//       description: 'HANDCRAFTED STEAMED BAO',
+//       imageUrl: '/hotasianbuns.jpg',
+//       isHot: true,
+//       instagram: 'https://www.instagram.com/hot_asian_buns/',
+//       // website: 'https://www.cholodogs.com/',
+//       orderType: 'First come first serve',
+//       basedIn: 'Orlando',
+//       // Events: {
+//       //   create: [
+//       //     {
+//       //       date: new Date('2022-12-12 18:30:00'),
+//       //       location: "GB's Bottle Shop",
+//       //     },
+//       //   ],
+//       // },
+//     },
+//   });
+//   console.log(`JUST ADDED: \n ${popup.name}`);
+// }
 
 //Create many popups with many events
 // async function main() {
@@ -98,21 +107,21 @@ async function returnAllPopups() {
 async function createEvent() {
   const event = await prisma.event.create({
     data: {
-      date: new Date('2023-5-9 19:30:00'),
-      // name: "NEW YEAR'S PICKUP!",
+      date: new Date('2022-10-25 18:00:00'),
+      // name: 'WEEN EATING CHAMPIONSHIP',
       location: {
         connect: {
-          id: 'cl8xbephd0000vepq4119xq7g',
+          id: 'cl8yxrze50008verevd73lc9s',
         },
       },
       popup: {
         connect: {
-          id: 'cl8wnxxki0000veh0xjck9rla',
+          id: 'cl8yxxwg9000bve40upd78bo9',
         },
       },
     },
   });
-  console.log(event);
+  console.log(`${event.date.getDate()} Event added successfully`);
 }
 
 async function createLocation() {
@@ -166,7 +175,43 @@ async function updatePopup(popupid: string) {
   });
 }
 
+async function createAllLocations() {
+  await prisma.location.createMany({
+    data: locations,
+    skipDuplicates: true,
+  });
+  console.log('Locations added successfully');
+}
+
+async function createAllPopups() {
+  await prisma.popup.createMany({
+    data: popup,
+    skipDuplicates: true,
+  });
+  console.log('Popups added successfully');
+}
+
 // main()
+//   .then(async () => {
+//     await prisma.$disconnect();
+//   })
+//   .catch(async (e) => {
+//     console.error(e);
+//     await prisma.$disconnect();
+//     process.exit(1);
+//   });
+
+// createAllLocations()
+//   .then(async () => {
+//     await prisma.$disconnect();
+//   })
+//   .catch(async (e) => {
+//     console.error(e);
+//     await prisma.$disconnect();
+//     process.exit(1);
+//   });
+
+// createAllPopups()
 //   .then(async () => {
 //     await prisma.$disconnect();
 //   })
@@ -224,9 +269,39 @@ createEvent()
 //     console.error(e);
 //     await prisma.$disconnect();
 //     process.exit(1);
-//   });
+// //   });
 
 // updateEvent()
+//   .then(async () => {
+//     await prisma.$disconnect();
+//   })
+//   .catch(async (e) => {
+//     console.error(e);
+//     await prisma.$disconnect();
+//     process.exit(1);
+//   });
+
+// async function assignTagsToPopup(popupid: string) {
+//   await prisma.popup.update({
+//     where: {
+//       id: popupid,
+//     },
+//     data: {
+//       tags: {
+//         connect: [
+//           {
+//             id: 'cl8yy0zg10000ve14vjjrlbop',
+//           },
+//           // {
+//           //   id: 'cl8x8q9f70000ve9rjgq0bq8j',
+//           // },
+//         ],
+//       },
+//     },
+//   });
+//   console.log('Tags assigned successfully');
+// }
+// assignTagsToPopup('cl8yxxwg90000ve40fjxgq181')
 //   .then(async () => {
 //     await prisma.$disconnect();
 //   })

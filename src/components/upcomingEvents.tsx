@@ -1,12 +1,14 @@
 import { useState } from 'react';
 import { Popup } from '../types/popup';
 import { convertTime } from './events';
+import { useAutoAnimate } from '@formkit/auto-animate/react';
 
 export default function UpcomingEvents({ popup }: { popup: Popup }) {
   const [remainingEvents, setRemainingEvents] = useState(
     popup.events.length - 3
   );
   const [upperLimit, setUpperLimit] = useState(3);
+  const [parent] = useAutoAnimate<HTMLOListElement>();
 
   const handleClick = () => {
     setUpperLimit(upperLimit + 3);
@@ -15,7 +17,7 @@ export default function UpcomingEvents({ popup }: { popup: Popup }) {
   return (
     <>
       <div className='overflow-hidden rounded-md border border-gray-300 bg-white'>
-        <ol role='list' className='divide-y divide-gray-300 '>
+        <ol ref={parent} role='list' className='divide-y divide-gray-300'>
           {popup.events?.slice(0, upperLimit).map((event) => (
             <li key={event.id} className='px-6 py-4 mx-5'>
               <span className='flex flex-row justify-between text-xs'>

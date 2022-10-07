@@ -5,9 +5,12 @@ import Nav from '../components/Nav';
 import AllPopups from '../components/allPopups';
 import { trpc } from '../utils/trpc';
 import { useState } from 'react';
-import { Event, Location, Popup } from '../types/popup';
+import { Event, Location, Popup, Tags } from '../types/popup';
+import { z } from 'zod';
 
 const Home: NextPage = () => {
+  //This will pull the tags that match the popup id
+
   const rawlocations: Location[] = trpc
     .useQuery(['location.getLocations'])
     .data?.map((location) => {
@@ -37,6 +40,7 @@ const Home: NextPage = () => {
     .data?.map((popup) => {
       return {
         ...popup,
+        // tags: trpc.useQuery(['tags.getTags', { popupId: popup.id }]).data,
         links: {
           imageUrl: popup.imageUrl,
           instagram: popup.instagram,
@@ -70,7 +74,22 @@ const Home: NextPage = () => {
         className='
       max-w-7xl mx-auto sm:px-6 lg:px-8 pb-32'
       >
+        {/* {rawtags.map((tag) => (
+          <div key={tag.id}>
+            <div className='pt-6'>{tag.name}:</div>
+          </div>
+        ))} */}
+
         <div className='pt-6'>All popups:</div>
+        {/* <div>
+          I like
+          {
+            trpc.useQuery([
+              'tags.getTags',
+              { popupId: 'cl8yxxwg90000ve40fjxgq181' },
+            ]).data?.name
+          }
+        </div> */}
         <ul
           role='list'
           className='grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3'

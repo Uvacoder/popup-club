@@ -52,7 +52,9 @@ export default function AllPopups({ popup }: { popup: Popup }) {
               </div>
             </div>
           </div>
-          <Tags tags={popup.categories} />
+          {/* {popup.tags.map((tag) => (
+            <Tags key={tag.id} tag={tag.name} />
+          ))} */}
         </div>
       </li>
     </>

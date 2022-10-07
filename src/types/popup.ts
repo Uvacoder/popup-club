@@ -1,10 +1,12 @@
+import Tags from '../components/tags';
+
 export type Popup = {
   id: number;
   name: string;
   description: string;
   basedIn: string;
   links: Links;
-  categories: string[];
+  tags: Tags[];
   isHot: boolean;
   orderType: 'First come first serve' | 'Preorder';
   events: Event[];
@@ -40,4 +42,10 @@ export type Links = {
   twitter?: string;
   website?: string;
   youtube?: string;
+};
+
+export type Tags = {
+  id: number;
+  name: string;
+  popups: Popup[];
 };
