@@ -49,7 +49,7 @@ export default function UpcomingEvents({ popup }: { popup: Popup }) {
             className='inline-flex items-center rounded-lg border border-gray-300 bg-white px-2.5 py-1 text-xs font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2'
             onClick={() => handleClick()}
           >
-            See {remainingEvents >= 3 ? remainingEvents - 2 : null} more
+            See {remainingEvents >= 3 ? remainingEvents - 3 : null} more
           </button>
         ) : null}
       </div>
