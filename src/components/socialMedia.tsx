@@ -1,6 +1,7 @@
 import { HeartIcon, ShareIcon, LinkIcon } from '@heroicons/react/solid';
 import { Links } from '../types/popup';
 import Image from 'next/image';
+import Link from 'next/link';
 
 export default function SocialMedia({ links }: { links: Links }) {
   return (
@@ -13,7 +14,12 @@ export default function SocialMedia({ links }: { links: Links }) {
           href={links.instagram}
           className='hover:cursor-pointer'
         >
-          <Image src={'/instagram.svg'} width={17} height={17} />
+          <Image
+            src={'/instagram.svg'}
+            width={17}
+            height={17}
+            className='hover:cursor-pointer'
+          />
         </a>
       ) : null}
       {/* {typeof links.website === 'string' ? (

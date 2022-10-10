@@ -1,8 +1,9 @@
-// import { popupData } from '../../temp/popupData';
 import { Popup, Event } from '../types/popup';
 import Image from 'next/image';
 import SocialMedia from './socialMedia';
-import Tags from './tags';
+import Link from 'next/link';
+import { trpc } from '../utils/trpc';
+import PopupTags from './tags';
 
 export function convertTime(date: Date) {
   const hours = date.getHours();
@@ -11,6 +12,12 @@ export function convertTime(date: Date) {
   const hours12 = hours % 12 || 12;
   const minutesStr = minutes < 10 ? '0' + minutes : minutes;
   return hours12 + ':' + minutesStr + ampm;
+}
+
+export function getTagsByPopupId(popupId: { popupId: string }) {
+  return trpc.useQuery(['tags.getTagsByPopup', popupId], {
+    enabled: true,
+  });
 }
 
 export default function Events({ popups }: { popups: Popup[] }) {
@@ -39,7 +46,7 @@ export default function Events({ popups }: { popups: Popup[] }) {
         className='grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3'
       >
         {sortedPopups?.map((popup) => (
-          <>
+          <span key={popup.id}>
             {popup.events.slice(0, 1).map((event) => (
               <li
                 key={event.id}
@@ -111,15 +118,13 @@ export default function Events({ popups }: { popups: Popup[] }) {
                       </div>
                     </div>
                   </div>
-                  {/* {popup.tags.map((tag) => (
-                    <Tags key={tag.id} tag={tag.name} />
-                  ))} */}
-                  {/* Implement orderType somewhere
-                  {popup.orderType === 'Preorder' ? (
-                    <span className='text-xs text-semibold text-red-500'>
-                      {'*Preorder! ->'}
-                    </span>
-                  ) : null} */}
+                  <div className='flex flex-row space-x-1'>
+                    {getTagsByPopupId({
+                      popupId: popup.id.toString(),
+                    }).data?.map((tag) => (
+                      <PopupTags tag={tag.tag} />
+                    ))}
+                  </div>
                   <p className='text-sm text-semibold text-gray-800'>
                     {typeof event.description === 'string' ? (
                       <span className='font-medium'>
@@ -133,7 +138,7 @@ export default function Events({ popups }: { popups: Popup[] }) {
                 </div>
               </li>
             ))}
-          </>
+          </span>
         ))}
       </ul>
     </>

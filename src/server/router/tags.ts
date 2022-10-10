@@ -1,21 +1,43 @@
 import { createRouter } from './context';
 import { z } from 'zod';
 
-//This will return all tags for the given popup id
-export const tagsRouter = createRouter().query('getTags', {
+// export const tagsRouter = createRouter().query('getTags', {
+//   async resolve({ ctx }) {
+//     return await ctx.prisma.tagsOnPopups.findMany();
+//   },
+// });
+
+//This will return all tags including tag name by id for the given popup id
+export const tagsRouter = createRouter().query('getTagsByPopup', {
   input: z.object({
     popupId: z.string(),
   }),
-  resolve({ input, ctx }) {
-    return ctx.prisma.tags.findUnique({
+  async resolve({ ctx, input }) {
+    return await ctx.prisma.tagsOnPopups.findMany({
       where: {
-        id: input.popupId,
+        popupId: input.popupId,
+      },
+      include: {
+        tag: true,
       },
     });
   },
 });
 
-// .query('getTags', {
+// query('getTagsByPopupId', {
+//   input: z.object({
+//     popupId: z.string(),
+//   }),
+//   resolve({ input, ctx }) {
+//     return ctx.prisma.tags.findUnique({
+//       where: {
+//         id: input.popupId,
+//       },
+//     });
+//   },
+// })
+
+// query('getTags', {
 //   input: z.object({
 //     popupId: z.string(),
 //   }),

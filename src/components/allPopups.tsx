@@ -1,9 +1,11 @@
-import { Popup } from '../types/popup';
+import { Popup, Tags } from '../types/popup';
 import Image from 'next/image';
 import SocialMedia from './socialMedia';
-import Tags from './tags';
 import PopupModal from './popupModal';
 import { useState } from 'react';
+import PopupTags from './tags';
+import { trpc } from '../utils/trpc';
+import { getTagsByPopupId } from './events';
 
 export default function AllPopups({ popup }: { popup: Popup }) {
   const [isShown, setIsShown] = useState(false);
@@ -52,9 +54,13 @@ export default function AllPopups({ popup }: { popup: Popup }) {
               </div>
             </div>
           </div>
-          {/* {popup.tags.map((tag) => (
-            <Tags key={tag.id} tag={tag.name} />
-          ))} */}
+          <div className='flex flex-row space-x-1'>
+            {getTagsByPopupId({ popupId: popup.id.toString() }).data?.map(
+              (tag) => (
+                <PopupTags tag={tag.tag} />
+              )
+            )}
+          </div>
         </div>
       </li>
     </>

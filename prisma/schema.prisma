@@ -66,7 +66,7 @@ model VerificationToken {
 }
 
 model Popup {
-    id          String  @id @default(cuid())
+    id          String         @id @default(cuid())
     name        String
     description String
     basedIn     String
@@ -76,7 +76,7 @@ model Popup {
     twitter     String?
     website     String?
     youtube     String?
-    tags        Tags[]
+    tags        TagsOnPopups[]
     isHot       Boolean
     orderType   String
     events      Event[]
@@ -106,7 +106,15 @@ model Location {
 }
 
 model Tags {
-    id     String  @id @default(cuid())
+    id     String         @id @default(cuid())
     name   String
-    popups Popup[]
+    popups TagsOnPopups[]
+}
+
+model TagsOnPopups {
+    id      String @id @default(cuid())
+    popup   Popup  @relation(fields: [popupId], references: [id])
+    popupId String
+    tag     Tags   @relation(fields: [tagId], references: [id])
+    tagId   String
 }

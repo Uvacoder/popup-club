@@ -1,12 +1,11 @@
-import Tags from '../components/tags';
-
 export type Popup = {
   id: number;
   name: string;
   description: string;
   basedIn: string;
   links: Links;
-  tags: Tags[];
+  tags: TagsOnPopups[];
+  categories: string[];
   isHot: boolean;
   orderType: 'First come first serve' | 'Preorder';
   events: Event[];
@@ -47,5 +46,12 @@ export type Links = {
 export type Tags = {
   id: number;
   name: string;
-  popups: Popup[];
+};
+
+export type TagsOnPopups = {
+  id: number;
+  popup: Popup;
+  popupId: string;
+  tag: Tags;
+  tagId: string;
 };

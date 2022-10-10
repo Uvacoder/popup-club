@@ -6,39 +6,34 @@ import AllPopups from '../components/allPopups';
 import { trpc } from '../utils/trpc';
 import { useState } from 'react';
 import { Event, Location, Popup, Tags } from '../types/popup';
-import { z } from 'zod';
+import { z, ZodString } from 'zod';
 
 const Home: NextPage = () => {
-  const rawlocations: Location[] = trpc
-    .useQuery(['location.getLocations'])
-    .data?.map((location) => {
-      return {
-        ...location,
-        mapsUrl: location.mapsUrl,
-        events: rawevents?.filter((event) => event.locationid === location.id),
-      };
-    });
+  const rawlocations = trpc.useQuery(['location.getLocations']).data;
 
-  const rawevents: Event[] = trpc
-    .useQuery(['event.getEvents'])
-    .data?.map((event) => {
-      return {
-        ...event,
-        location: rawlocations?.find(
-          (location) => location.id.toString() === event.locationId
-        ),
-        popup: rawpopups?.find(
-          (popup) => popup.id?.toString() === event.popupId
-        ),
-      };
-    });
+  const rawevents = trpc.useQuery(['event.getEvents']).data?.map((event) => {
+    return {
+      ...event,
+      location: rawlocations?.find(
+        (location) => location.id === event.locationId
+      ),
+      popup: rawpopups?.find(
+        (popup: { id: { toString: () => string } }) =>
+          popup.id?.toString() === event.popupId
+      ),
+    };
+  });
 
   const rawpopups: Popup[] = trpc
     .useQuery(['popup.getPopups'])
     .data?.map((popup) => {
       return {
-        ...popup,
-        // tags: trpc.useQuery(['tags.getTags', { popupId: popup.id }]).data,
+        id: popup.id,
+        name: popup.name,
+        description: popup.description,
+        basedIn: popup.basedIn,
+        isHot: popup.isHot,
+        orderType: popup.orderType,
         links: {
           imageUrl: popup.imageUrl,
           instagram: popup.instagram,
@@ -47,14 +42,28 @@ const Home: NextPage = () => {
           website: popup.website,
           youtube: popup.youtube,
         },
-
         events: rawevents
-          ?.filter((event) => event.popupId === popup.id)
-          .sort((a, b) => {
-            return new Date(a.date).getTime() - new Date(b.date).getTime();
-          }),
+          ?.filter(
+            (event: { popupId: string }) =>
+              event.popupId === popup.id?.toString()
+          )
+          .sort(
+            (
+              a: { date: string | number | Date },
+              b: { date: string | number | Date }
+            ) => {
+              return new Date(a.date).getTime() - new Date(b.date).getTime();
+            }
+          ),
       };
     });
+
+  console.log(
+    trpc.useQuery([
+      'tags.getTagsByPopup',
+      { popupId: 'cl8yxxwg90000ve40fjxgq181' },
+    ])
+  );
 
   return (
     <>
@@ -79,20 +88,11 @@ const Home: NextPage = () => {
         ))} */}
 
         <div className='pt-6'>All popups:</div>
-        {/* <div>
-          I like
-          {
-            trpc.useQuery([
-              'tags.getTags',
-              { popupId: 'cl8yxxwg90000ve40fjxgq181' },
-            ]).data?.name
-          }
-        </div> */}
         <ul
           role='list'
           className='grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3'
         >
-          {rawpopups?.map((popup) => (
+          {rawpopups?.map((popup: Popup) => (
             <AllPopups popup={popup} key={popup.id} />
           ))}
         </ul>
