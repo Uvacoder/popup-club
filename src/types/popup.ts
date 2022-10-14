@@ -5,7 +5,6 @@ export type Popup = {
   basedIn: string;
   links: Links;
   tags: TagsOnPopups[];
-  categories: string[];
   isHot: boolean;
   orderType: 'First come first serve' | 'Preorder';
   events: Event[];

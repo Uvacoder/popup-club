@@ -4,9 +4,7 @@ import Events from '../components/events';
 import Nav from '../components/Nav';
 import AllPopups from '../components/allPopups';
 import { trpc } from '../utils/trpc';
-import { useState } from 'react';
-import { Event, Location, Popup, Tags } from '../types/popup';
-import { z, ZodString } from 'zod';
+import { Popup } from '../types/popup';
 
 const Home: NextPage = () => {
   const rawlocations = trpc.useQuery(['location.getLocations']).data;
@@ -28,12 +26,7 @@ const Home: NextPage = () => {
     .useQuery(['popup.getPopups'])
     .data?.map((popup) => {
       return {
-        id: popup.id,
-        name: popup.name,
-        description: popup.description,
-        basedIn: popup.basedIn,
-        isHot: popup.isHot,
-        orderType: popup.orderType,
+        ...popup,
         links: {
           imageUrl: popup.imageUrl,
           instagram: popup.instagram,
@@ -58,13 +51,6 @@ const Home: NextPage = () => {
       };
     });
 
-  console.log(
-    trpc.useQuery([
-      'tags.getTagsByPopup',
-      { popupId: 'cl8yxxwg90000ve40fjxgq181' },
-    ])
-  );
-
   return (
     <>
       <Head>
@@ -81,12 +67,6 @@ const Home: NextPage = () => {
         className='
       max-w-7xl mx-auto sm:px-6 lg:px-8 pb-32'
       >
-        {/* {rawtags.map((tag) => (
-          <div key={tag.id}>
-            <div className='pt-6'>{tag.name}:</div>
-          </div>
-        ))} */}
-
         <div className='pt-6'>All popups:</div>
         <ul
           role='list'

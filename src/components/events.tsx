@@ -70,7 +70,6 @@ export default function Events({ popups }: { popups: Popup[] }) {
                         ) : null}
                       </span>
                     </div>
-                    {/* Social media */}
                     <div className='flex flex-col w-full'>
                       <div className='grid grid-cols-3 h-4'>
                         <div className='text-xs font-semibold text-gray-900 col-span-2'>
@@ -86,7 +85,7 @@ export default function Events({ popups }: { popups: Popup[] }) {
                           </span>
                         </div>
                         <div className='flex flex-row space-x-2 col-start-3 justify-end'>
-                          <SocialMedia links={popup.links} />
+                          <SocialMedia links={popup.links} showAll={false} />
                         </div>
                       </div>
                       <div className='text-xl font-bold text-gray-900 tracking-tight antialiased'>
@@ -122,7 +121,7 @@ export default function Events({ popups }: { popups: Popup[] }) {
                     {getTagsByPopupId({
                       popupId: popup.id.toString(),
                     }).data?.map((tag) => (
-                      <PopupTags tag={tag.tag} />
+                      <PopupTags key={tag.tag.id} name={tag.tag.name} />
                     ))}
                   </div>
                   <p className='text-sm text-semibold text-gray-800'>
