@@ -27,14 +27,6 @@ const Home: NextPage = () => {
     .data?.map((popup) => {
       return {
         ...popup,
-        links: {
-          imageUrl: popup.imageUrl,
-          instagram: popup.instagram,
-          facebook: popup.facebook,
-          twitter: popup.twitter,
-          website: popup.website,
-          youtube: popup.youtube,
-        },
         events: rawevents
           ?.filter(
             (event: { popupId: string }) =>
@@ -50,6 +42,8 @@ const Home: NextPage = () => {
           ),
       };
     });
+
+  console.log(rawpopups);
 
   return (
     <>
@@ -77,7 +71,7 @@ const Home: NextPage = () => {
           ))}
         </ul>
 
-        <Events popups={rawpopups} />
+        {/* <Events popups={rawpopups} /> */}
       </main>
     </>
   );

@@ -1,22 +1,33 @@
-// src/server/router/index.ts
-import { createRouter } from './context';
-import superjson from 'superjson';
-
-import { exampleRouter } from './example';
-import { protectedExampleRouter } from './protected-example-router';
-import { popupRouter } from './popups';
-import { eventRouter } from './events';
-import { locationRouter } from './locations';
-import { tagsRouter } from './tags';
+import { createRouter } from "./helpers/createRouter";
+import { accountsRouter } from "./Account.router";
+import { sessionsRouter } from "./Session.router";
+import { usersRouter } from "./User.router";
+import { verificationtokensRouter } from "./VerificationToken.router";
+import { popupsRouter } from "./Popup.router";
+import { linksRouter } from "./Links.router";
+import { eventsRouter } from "./Event.router";
+import { locationsRouter } from "./Location.router";
+import { tagsRouter } from "./Tags.router";
+import { tagsonpopupsRouter } from "./TagsOnPopups.router";
 
 export const appRouter = createRouter()
-  .transformer(superjson)
-  .merge('example.', exampleRouter)
-  .merge('question.', protectedExampleRouter)
-  .merge('popup.', popupRouter)
-  .merge('event.', eventRouter)
-  .merge('location.', locationRouter)
-  .merge('tags.', tagsRouter);
 
-// export type definition of API
-export type AppRouter = typeof appRouter;
+  .merge('account.', accountsRouter)
+
+  .merge('session.', sessionsRouter)
+
+  .merge('user.', usersRouter)
+
+  .merge('verificationtoken.', verificationtokensRouter)
+
+  .merge('popup.', popupsRouter)
+
+  .merge('links.', linksRouter)
+
+  .merge('event.', eventsRouter)
+
+  .merge('location.', locationsRouter)
+
+  .merge('tags.', tagsRouter)
+
+  .merge('tagsonpopups.', tagsonpopupsRouter)
