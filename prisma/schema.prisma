@@ -16,10 +16,6 @@ datasource db {
     referentialIntegrity = "prisma"
 }
 
-model Example {
-    id String @id @default(cuid())
-}
-
 // Necessary for Next auth
 model Account {
     id                String  @id @default(cuid())
@@ -70,16 +66,23 @@ model Popup {
     name        String
     description String
     basedIn     String
-    imageUrl    String?
-    facebook    String?
-    instagram   String?
-    twitter     String?
-    website     String?
-    youtube     String?
     tags        TagsOnPopups[]
     isHot       Boolean
     orderType   String
     events      Event[]
+    links       Links?
+}
+
+model Links {
+    id        String  @id @default(cuid())
+    popupId   String  @unique
+    imageUrl  String?
+    facebook  String?
+    instagram String?
+    twitter   String?
+    website   String?
+    youtube   String?
+    popup     Popup   @relation(fields: [popupId], references: [id])
 }
 
 model Event {

@@ -10,12 +10,12 @@ import { z } from 'zod';
 //This will return all tags including tag name by id for the given popup id
 export const tagsRouter = createRouter().query('getTagsByPopup', {
   input: z.object({
-    popupId: z.string(),
+    popupid: z.string(),
   }),
   async resolve({ ctx, input }) {
     return await ctx.prisma.tagsOnPopups.findMany({
       where: {
-        popupId: input.popupId,
+        popupId: input.popupid,
       },
       include: {
         tag: true,

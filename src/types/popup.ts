@@ -1,18 +1,29 @@
 export type Popup = {
-  id: number;
+  id: string;
   name: string;
   description: string;
   basedIn: string;
   links: Links;
   tags: TagsOnPopups[];
   isHot: boolean;
-  orderType: 'First come first serve' | 'Preorder';
+  orderType: string;
   events: Event[];
 };
 
+export type Links = {
+  id?: string;
+  popupId?: string;
+  imageUrl?: string | null;
+  facebook?: string | null;
+  instagram?: string | null;
+  twitter?: string | null;
+  website?: string | null;
+  youtube?: string | null;
+};
+
 export type Event = {
-  id: number;
-  popupId: string;
+  id: string;
+  popupid: string;
   locationid: string;
   description?: string;
   name?: string;
@@ -22,7 +33,7 @@ export type Event = {
 };
 
 export type Location = {
-  id: number;
+  id: string;
   name: string;
   address: string;
   city: string;
@@ -33,24 +44,29 @@ export type Location = {
   events: Event[];
 };
 
-export type Links = {
-  imageUrl?: string;
-  facebook?: string;
-  instagram?: string;
-  twitter?: string;
-  website?: string;
-  youtube?: string;
-};
-
 export type Tags = {
-  id: number;
+  id: string;
   name: string;
 };
 
 export type TagsOnPopups = {
-  id: number;
+  id: string;
   popup: Popup;
   popupId: string;
   tag: Tags;
   tagId: string;
 };
+
+export interface PopupSchema {
+  tags: (TagsOnPopups & {
+    popup: Popup;
+    tag: Tags;
+  })[];
+  events: (Event & {
+    popup: Popup;
+    location: Location;
+  })[];
+  links: (Links & {
+    popup: Popup;
+  })[];
+}

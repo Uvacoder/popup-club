@@ -15,6 +15,7 @@ export default function PopupModal({
   setIsShown: React.Dispatch<React.SetStateAction<boolean>>;
   popup: Popup;
 }) {
+  console.log(popup);
   return (
     <Transition.Root show={isShown} as={Fragment}>
       <Dialog as='div' className='relative z-10' onClose={setIsShown}>
@@ -43,12 +44,13 @@ export default function PopupModal({
             >
               <Dialog.Panel className='relative transform overflow-hidden rounded-lg bg-white px-4 pt-5 pb-4 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-sm sm:p-6'>
                 <div className='flex absolute right-4 top-2 space-x-2'>
-                  <SocialMedia links={popup.links} />
+                  <SocialMedia links={popup.links} showAll={false} />
                 </div>
                 <div>
                   <div className='mx-auto flex items-center justify-center rounded-full'>
                     <Image
-                      src={popup.links?.imageUrl || '/hotdog.jpg'}
+                      key={popup.id}
+                      src={popup.links.imageUrl || '/hotdog.jpg'}
                       alt='Popup logo'
                       height={125}
                       width={125}
@@ -67,7 +69,8 @@ export default function PopupModal({
                       <p className='text-sm text-gray-500 pb-5'>
                         {popup.basedIn}, FL
                       </p>
-                      <UpcomingEvents popup={popup} />
+
+                      <UpcomingEvents popup={popup} events={popup.events} />
                     </div>
                   </div>
                 </div>

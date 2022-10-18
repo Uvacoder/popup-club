@@ -164,16 +164,16 @@ async function updateEvent(eventid: string) {
   console.log('Entry updated successfully');
 }
 
-async function updatePopup(popupid: string) {
-  await prisma.popup.update({
-    where: {
-      id: popupid,
-    },
-    data: {
-      website: 'https://blackmagicpizza.com/',
-    },
-  });
-}
+// async function updatePopup(popupid: string) {
+//   await prisma.popup.update({
+//     where: {
+//       id: popupid,
+//     },
+//     data: {
+//       website: 'https://blackmagicpizza.com/',
+//     },
+//   });
+// }
 
 async function createAllLocations() {
   await prisma.location.createMany({

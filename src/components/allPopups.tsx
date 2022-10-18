@@ -1,4 +1,4 @@
-import { Popup, Tags } from '../types/popup';
+import { Links, Popup, PopupSchema, Tags, TagsOnPopups } from '../types/popup';
 import Image from 'next/image';
 import SocialMedia from './socialMedia';
 import PopupModal from './popupModal';
@@ -7,11 +7,19 @@ import PopupTags from './tags';
 import { getTagsByPopupId } from './events';
 import { trpc } from '../utils/trpc';
 
+export function getLinksByPopupId(popupId: { popupId: string }) {
+  return trpc.useQuery(['links.getLinksByPopup', popupId], {
+    enabled: true,
+  });
+}
+
 export default function AllPopups({ popup }: { popup: Popup }) {
   const [isShown, setIsShown] = useState(false);
   const handleClick = () => {
     setIsShown(!isShown);
   };
+
+  // console.log(popup);
 
   return (
     <>
@@ -27,20 +35,17 @@ export default function AllPopups({ popup }: { popup: Popup }) {
           <div className='flex flex-row object-cover space-x-2'>
             <div className='h-fit space-y-3 flex'>
               <Image
+                key={popup.links.id}
                 className='h-10 w-10 flex-shrink-0 rounded-full bg-gray-300'
-                src={
-                  typeof popup.links?.imageUrl === 'string'
-                    ? popup.links?.imageUrl
-                    : '/hotdog.jpg'
-                }
-                alt='Popup logo'
-                height={75}
+                src={popup.links.imageUrl ?? '/hotdog.jpg'}
+                alt=''
                 width={75}
+                height={75}
               />
             </div>
             <div className='flex flex-col w-fit shrink'>
               <div className='flex flex-row space-x-2 h-5'>
-                {/* <SocialMedia links={popup.links} showAll={false} /> */}
+                <SocialMedia links={popup.links} showAll={false} />
               </div>
               <div className='text-xl font-bold text-gray-900 -mt-1 tracking-tight antialiased'>
                 {popup.name}
@@ -54,11 +59,9 @@ export default function AllPopups({ popup }: { popup: Popup }) {
             </div>
           </div>
           <div className='flex flex-row space-x-1'>
-            {getTagsByPopupId({ popupId: popup.id.toString() }).data?.map(
-              (tag) => (
-                <PopupTags key={tag.tag.id} name={tag.tag.name} />
-              )
-            )}
+            {popup.tags?.map((tag) => (
+              <PopupTags key={tag.tag.id} name={tag.tag?.name} />
+            ))}
           </div>
         </div>
       </li>

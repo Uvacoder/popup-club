@@ -1,9 +1,16 @@
 import { useState } from 'react';
-import { Popup } from '../types/popup';
+import { Popup, Event } from '../types/popup';
 import { convertTime } from './events';
 import { useAutoAnimate } from '@formkit/auto-animate/react';
 
-export default function UpcomingEvents({ popup }: { popup: Popup }) {
+export default function UpcomingEvents({
+  popup,
+  events,
+}: {
+  popup: Popup;
+  events: Event[];
+}) {
+  popup.events = events;
   const [remainingEvents, setRemainingEvents] = useState(
     popup.events.length - 3
   );

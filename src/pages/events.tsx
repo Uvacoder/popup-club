@@ -6,7 +6,7 @@ import AllPopups from '../components/allPopups';
 import { trpc } from '../utils/trpc';
 import { Popup, Event, Location, Links } from '../types/popup';
 
-const Home: NextPage = () => {
+const EventsPage: NextPage = () => {
   const rawpopups = trpc.useQuery(['popup.getPopups']).data;
 
   return (
@@ -25,13 +25,13 @@ const Home: NextPage = () => {
         className='
       max-w-7xl mx-auto sm:px-6 lg:px-8 pb-32'
       >
-        <div className='pt-6'>All popups:</div>
+        <div className='pt-6'>All Events:</div>
         <ul
           role='list'
           className='grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3'
         >
           {rawpopups?.map((popup) => (
-            <AllPopups popup={popup as unknown as Popup} key={popup.id} />
+            <Events popup={popup as unknown as Popup} key={popup.id} />
           ))}
         </ul>
       </main>
@@ -39,4 +39,4 @@ const Home: NextPage = () => {
   );
 };
 
-export default Home;
+export default EventsPage;

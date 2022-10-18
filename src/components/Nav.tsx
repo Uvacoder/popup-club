@@ -12,7 +12,7 @@ const user = {
 const navigation = [
   { name: 'Dashboard', href: '/', current: true },
   { name: 'Vendors', href: '/popups', current: false },
-  { name: 'Events', href: '#', current: false },
+  { name: 'Events', href: '/events', current: false },
   { name: 'Calendar', href: '#', current: false },
 ];
 const userNavigation = [
