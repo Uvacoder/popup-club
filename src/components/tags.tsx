@@ -1,5 +1,3 @@
-import { Tags } from '../types/popup';
-
 export default function PopupTags(
   { name }: { name: string },
   { key }: { key: string }

@@ -3,8 +3,6 @@ import Image from 'next/image';
 import SocialMedia from './socialMedia';
 import { trpc } from '../utils/trpc';
 import PopupTags from './tags';
-import { getLinksByPopupId } from './allPopups';
-import { PopupSchema } from '../types/popup';
 
 export function convertTime(date: Date) {
   const hours = date.getHours();
@@ -15,17 +13,17 @@ export function convertTime(date: Date) {
   return hours12 + ':' + minutesStr + ampm;
 }
 
-export function getTagsByPopupId(popupid: { popupid: string }) {
-  return trpc.useQuery(['tags.getTagsByPopup', popupid], {
-    enabled: true,
-  });
-}
+// export function getTagsByPopupId(popupid: { popupid: string }) {
+//   return trpc.useQuery(['tags.getTagsByPopup', popupid], {
+//     enabled: true,
+//   });
+// }
 
-export function getEventsByPopupId(popupid: { popupid: string }) {
-  return trpc.useQuery(['event.getEventByPopupId', popupid], {
-    enabled: true,
-  });
-}
+// export function getEventsByPopupId(popupid: { popupid: string }) {
+//   return trpc.useQuery(['event.getEventByPopupId', popupid], {
+//     enabled: true,
+//   });
+// }
 
 export default function Events({ popup }: { popup: Popup }) {
   console.log(popup);
