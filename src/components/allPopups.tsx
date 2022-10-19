@@ -1,4 +1,4 @@
-import { Links, Popup, PopupSchema, Tags, TagsOnPopups } from '../types/popup';
+import { Popup } from '../types/popup';
 import Image from 'next/image';
 import SocialMedia from './socialMedia';
 import PopupModal from './popupModal';

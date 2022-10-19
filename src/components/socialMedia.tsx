@@ -35,6 +35,7 @@ export default function SocialMedia({
                 width={17}
                 height={17}
                 className='hover:cursor-pointer'
+                alt='Instagram'
               />
             </a>
           );

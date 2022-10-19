@@ -1,7 +1,6 @@
-import { Links, Popup, Tags, TagsOnPopups } from '../types/popup';
+import { Popup } from '../types/popup';
 import Image from 'next/image';
 import SocialMedia from './socialMedia';
-import { trpc } from '../utils/trpc';
 import PopupTags from './tags';
 
 export function convertTime(date: Date) {
