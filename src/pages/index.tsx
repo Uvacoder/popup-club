@@ -7,7 +7,7 @@ import { trpc } from '../utils/trpc';
 import { Popup } from '../types/popup';
 
 const Home: NextPage = () => {
-  const rawpopups = trpc.useQuery(['popup.getPopups']).data;
+  const rawpopups = trpc.popups.getAllPopups.useQuery().data;
 
   return (
     <>
@@ -23,7 +23,7 @@ const Home: NextPage = () => {
       <Nav />
       <main
         className='
-      max-w-7xl mx-auto sm:px-6 lg:px-8 pb-32'
+      mx-auto max-w-7xl pb-32 sm:px-6 lg:px-8'
       >
         <div className='pt-6'>All popups:</div>
         <ul
