@@ -7,11 +7,7 @@ export const popupRouter = router({
   getAllPopups: publicProcedure.query(async ({ ctx }) => {
     const popups = await ctx.prisma.popup.findMany({
       include: {
-        links: {
-          include: {
-            popup: true,
-          },
-        },
+        links: true,
         events: {
           include: {
             location: true,
