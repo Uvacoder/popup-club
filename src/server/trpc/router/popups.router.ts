@@ -2,9 +2,10 @@ import { z } from 'zod';
 import { publicProcedure, router } from '../trpc';
 
 //This will return all the popups in the database
+
 export const popupRouter = router({
-  getAllPopups: publicProcedure.query(({ ctx }) => {
-    return ctx.prisma.popup.findMany({
+  getAllPopups: publicProcedure.query(async ({ ctx }) => {
+    const popups = await ctx.prisma.popup.findMany({
       include: {
         links: {
           include: {
@@ -14,73 +15,51 @@ export const popupRouter = router({
         events: {
           include: {
             location: true,
-            popup: true,
+          },
+          orderBy: {
+            date: 'asc',
           },
         },
         tags: {
           include: {
             tag: true,
-            popup: true,
+          },
+          orderBy: {
+            tag: {
+              name: 'asc',
+            },
           },
         },
       },
+      orderBy: {
+        name: 'asc',
+      },
     });
+    if (!popups) throw new Error('No popups found');
+    return popups;
   }),
 });
 
-// createRouter()
-//   .query('getPopups', {
-//     async resolve({ ctx }) {
-//       return await ctx.prisma.popup.findMany({
-//         include: {
-//           links: {
-//             include: {
-//               popup: true,
-//             },
-//           },
-//           events: {
-//             include: {
-//               location: true,
-//               popup: true,
-//             },
-//           },
-//           tags: {
-//             include: {
-//               tag: true,
-//               popup: true,
-//             },
+// export const popupRouter = router({
+//   getAllPopups: publicProcedure.query(({ ctx }) => {
+//     return ctx.prisma.popup.findMany({
+//       include: {
+//         links: {
+//           include: {
+//             popup: true,
 //           },
 //         },
-//       });
-//     },
-//   })
-//   .query('getPopupsById', {
-//     input: z.object({
-//       id: z.string(),
-//     }),
-//     async resolve({ ctx, input }) {
-//       return await ctx.prisma.popup.findUnique({
-//         where: {
-//           id: input.id,
+//         events: {
+//           include: {
+//             location: true,
+//           },
 //         },
-//         include: {
-//           links: true,
-//           tags: true,
-//           events: true,
+//         tags: {
+//           include: {
+//             tag: true,
+//           },
 //         },
-//       });
-//     },
-//   });
-
-// .query('getPopupsByLocationId', {
-//   input: z.object({
-//     locationId: z.string(),
-//   }),
-//   async resolve({ ctx, input }) {
-//     return await ctx.prisma.popup.findMany({
-//       where: {
-//         locationId: input.locationId,
 //       },
 //     });
-//   },
+//   }),
 // });

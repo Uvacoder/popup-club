@@ -31,11 +31,11 @@ export default function Events({ popup }: { popup: Popup }) {
       {popup.events?.slice(0, 1).map((event) => (
         <li
           key={event.id}
-          className='flex flex-col border border-collapse divide-y divide-zinc-200 rounded-lg shadow-sm hover:bg-zinc-50 hover:shadow-md transition-colors'
+          className='mx-2 flex border-collapse flex-col divide-y divide-zinc-200 rounded-lg border shadow-sm transition-colors hover:bg-zinc-50 hover:shadow-md'
         >
           <div className='p-4 '>
-            <div className='flex flex-row object-cover space-x-2'>
-              <div className='h-fit space-y-3 flex'>
+            <div className='flex flex-row space-x-2 object-cover'>
+              <div className='flex h-fit space-y-3'>
                 <span className='relative inline-block'>
                   <Image
                     key={popup.id}
@@ -53,9 +53,9 @@ export default function Events({ popup }: { popup: Popup }) {
                   ) : null}
                 </span>
               </div>
-              <div className='flex flex-col w-full'>
-                <div className='grid grid-cols-3 h-4'>
-                  <div className='text-xs font-semibold text-gray-900 col-span-2'>
+              <div className='flex w-full flex-col'>
+                <div className='grid h-4 grid-cols-3'>
+                  <div className='col-span-2 text-xs font-semibold text-gray-900'>
                     {event.date.getMonth() +
                       1 +
                       '/' +
@@ -67,14 +67,14 @@ export default function Events({ popup }: { popup: Popup }) {
                       @{convertTime(event.date)}
                     </span>
                   </div>
-                  <div className='flex flex-row space-x-2 col-start-3 justify-end'>
+                  <div className='col-start-3 flex flex-row justify-end space-x-2'>
                     <SocialMedia links={popup.links} showAll={false} />
                   </div>
                 </div>
-                <div className='text-xl font-bold text-gray-900 tracking-tight antialiased'>
+                <div className='text-xl font-bold tracking-tight text-gray-900 antialiased'>
                   {typeof event.name === 'string' ? event.name : popup.name}
                 </div>
-                <div className='inline-block flex-shrink-0 text-sm font-normal text-gray-900 -mt-1'>
+                <div className='-mt-1 inline-block flex-shrink-0 text-sm font-normal text-gray-900'>
                   {typeof event.name === 'string' ? (
                     <>
                       <span className='text-xs font-medium'>
@@ -103,7 +103,7 @@ export default function Events({ popup }: { popup: Popup }) {
                 <PopupTags key={tag.tag.id} name={tag.tag.name} />
               ))}
             </div>
-            <p className='text-sm text-semibold text-gray-800'>
+            <p className='text-semibold text-sm text-gray-800'>
               {typeof event.description === 'string' ? (
                 <span className='font-medium'>
                   {' '}

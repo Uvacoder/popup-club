@@ -11,7 +11,7 @@ import { router } from '../trpc';
 export const appRouter = router({
   popups: popupRouter,
   events: eventRouter,
-  locations: locationRouter,
+  // locations: locationRouter,
   tags: tagsRouter,
   links: linksRouter,
 });

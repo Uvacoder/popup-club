@@ -1,54 +1,46 @@
-import { createRouter } from './context';
 import { z } from 'zod';
+import { publicProcedure, router } from '../trpc';
 
-// export const tagsRouter = createRouter().query('getTags', {
-//   async resolve({ ctx }) {
-//     return await ctx.prisma.tagsOnPopups.findMany();
-//   },
-// });
-
-//This will return all tags including tag name by id for the given popup id
-export const tagsRouter = createRouter().query('getTagsByPopup', {
-  input: z.object({
-    popupid: z.string(),
-  }),
-  async resolve({ ctx, input }) {
-    return await ctx.prisma.tagsOnPopups.findMany({
-      where: {
-        popupId: input.popupid,
-      },
+//This will return all tags including tag name and tag id
+export const tagsRouter = router({
+  getAllTags: publicProcedure.query(({ ctx }) => {
+    return ctx.prisma.tagsOnPopups.findMany({
       include: {
         tag: true,
       },
     });
-  },
+  }),
+  getTagsByPopupId: publicProcedure
+    .input(
+      z.object({
+        popupId: z.string(),
+      })
+    )
+    .query(({ ctx, input }) => {
+      return ctx.prisma.tagsOnPopups.findMany({
+        where: {
+          popupId: input.popupId,
+        },
+        include: {
+          tag: true,
+        },
+      });
+    }),
 });
 
-// query('getTagsByPopupId', {
+//This will return all tags including tag name by id for the given popup id
+// = createRouter().query('getTagsByPopup', {
 //   input: z.object({
-//     popupId: z.string(),
+//     popupid: z.string(),
 //   }),
-//   resolve({ input, ctx }) {
-//     return ctx.prisma.tags.findUnique({
+//   async resolve({ ctx, input }) {
+//     return await ctx.prisma.tagsOnPopups.findMany({
 //       where: {
-//         id: input.popupId,
+//         popupId: input.popupid,
+//       },
+//       include: {
+//         tag: true,
 //       },
 //     });
-//   },
-// })
-
-// query('getTags', {
-//   input: z.object({
-//     popupId: z.string(),
-//   }),
-//   async resolve({ input: { popupId } }) {
-//     const tags = await prisma?.popup
-//       .findUnique({
-//         where: {
-//           id: popupId,
-//         },
-//       })
-//       .tags();
-//     return tags;
 //   },
 // });
